@@ -11,36 +11,32 @@ import com.bank.model.Account;
 
 public class AccountDAOImpl implements AccountDAO {
 
-	
-
 	@Override
 	public int addAccount(Account account) {
-		
-		try(Connection connection = PostgresConnection.getConnection()){
-			String sql = "insert into account.checking (acnumber,"
-					+ " accountnumber , openingbalance , balance , "
+
+		try (Connection connection = PostgresConnection.getConnection()) {
+			String sql = "insert into account.checking (accountType" + " accountnumber , openingbalance , balance , "
 					+ "opendingdate , isactive , deposit, withdrawl, interestrate ) \n"
-					+ "   values (?, ?, ?, '?', '?', ?, ?,  ?, ?),";
+					+ "   values (?, ?, ?, ?, ?, ?, ?,  ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, account.getAcnumber());
-			
-			preparedStatement.setString(2, Account.getAccountnumber());
+			preparedStatement.setString(1, account.getAccountType());
+
+			preparedStatement.setString(2, account.getAccountnumber());
 			preparedStatement.setDouble(3, account.getOpeningbalance());
-			preparedStatement.setDouble(4,  account.getBalance());
+			preparedStatement.setDouble(4, account.getBalance());
 			preparedStatement.setDate(5, account.getOpendingdate());
-			preparedStatement.setBoolean(6, account.setIsactive(false));
-			preparedStatement.setDouble(7,  account.getDeposit());
-			preparedStatement.setDouble(8,  account.getWithdrawl());
+			preparedStatement.setBoolean(6, account.getIsactive());
+			preparedStatement.setDouble(7, account.getDeposit());
+			preparedStatement.setDouble(8, account.getWithdrawl());
 			preparedStatement.setDouble(9, account.getInteresrate());
-			
-			
-			
+
 			int count = preparedStatement.executeUpdate();
 			return count;
 		} catch (SQLException ex) {
+			ex.printStackTrace();
 			String message = ex.getMessage();
 			if (message.contains("ERROR: duplicate key")) {
-				System.out.println("The Primary KEY (Person Id) already exists: " + Account.getAccountnumber());
+				System.out.println("The Primary KEY (Person Id) already exists: " + account.getAccountnumber());
 			} else {
 				System.out.println(ex);
 			}
@@ -51,9 +47,8 @@ public class AccountDAOImpl implements AccountDAO {
 			return 0;
 		}
 
-}
+	}
 
-	
 	@Override
 	public int viewBalancebyAccNumber(String accountNumber, double balance) {
 		// TODO Auto-generated method stub
