@@ -19,7 +19,7 @@ public class AccountMain {
 //			int customerid, boolean isactive) {
 //		
 //	}
-		Account a = new Account("SA", 1, "", 10.0, 10.0, openingDate, 10.00, 0.00, 2.0, 1, false);
+		Account a = new Account("SA", 1, "", 10.0, 10.0, openingDate, 10.00, 0.00, 2.0, 3, false);
 		int c1 = adao.addAccount(a);
 		if (c1 > 0) {
 			System.out.println("acc added");

@@ -15,7 +15,7 @@ public class AccountDAOImpl implements AccountDAO {
 	public int addAccount(Account account) {
 
 		try (Connection connection = PostgresConnection.getConnection()) {
-			String sql = "insert into account.checking (accountType" + " accountnumber , openingbalance , balance , "
+			String sql = "insert into account.account (accountType, accountnumber , openingbalance , balance , "
 					+ "opendingdate , isactive , deposit, withdrawl, interestrate ) \n"
 					+ "   values (?, ?, ?, ?, ?, ?, ?,  ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
