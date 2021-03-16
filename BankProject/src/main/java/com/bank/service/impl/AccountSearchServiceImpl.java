@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.app.player.dao.dbutil.PostgresConnection;
+import com.bank.dao.dbutil.PostgresConnection;
 import com.bank.exception.BusinessException;
 import com.bank.model.Account;
 import com.bank.service.AccountSearchService;
@@ -38,10 +38,8 @@ public class AccountSearchServiceImpl implements AccountSearchService {
 
 	@Override
 	public Account getAccountByAccountNumber(String accountnumber) throws BusinessException {
-		try (Connection connection = PostgresConnection.getConnection()) {
-			String sql = "SELECT  (accountType, accountnumber , balance , " + "isactive) "
-
-					+ " FROM bank.account WHERE accountnumber = ?";
+		try (Connection connection = PostgresConnection.openConnection()) {
+			String sql = "SELECT * FROM bank.account WHERE accountnumber = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, accountnumber);
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -57,6 +55,7 @@ public class AccountSearchServiceImpl implements AccountSearchService {
 		} catch (ClassNotFoundException | SQLException e) {
 			System.out.println(e);
 			throw new BusinessException("Internal error");
-		}	}
+		}
+	}
 
 }

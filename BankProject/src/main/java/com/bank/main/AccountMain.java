@@ -4,11 +4,45 @@ import java.sql.Date;
 
 import com.bank.dao.AccountDAO;
 import com.bank.dao.impl.AccountDAOImpl;
+import com.bank.exception.BusinessException;
 import com.bank.model.Account;
+import com.bank.service.AccountSearchService;
+import com.bank.service.impl.AccountSearchServiceImpl;
 
 public class AccountMain {
 
 	public static void main(String[] args) {
+		// createAccount();
+		depositMoney();
+
+	}
+
+	private static void depositMoney() {
+		try {
+			String accountnumber = "3-12345674";
+
+			AccountSearchService accountSearchService = new AccountSearchServiceImpl();
+			Account account = accountSearchService.getAccountByAccountNumber(accountnumber);
+			System.out.println("Current Balance: " + account.getBalance());
+			AccountDAO adao = new AccountDAOImpl();
+			int c = adao.addDeposit(accountnumber, 100);
+			if (c > 0) {
+				System.out.println("Deposit success.");
+				Account account1 = accountSearchService.getAccountByAccountNumber(accountnumber);
+				System.out.println("New Balance: " + account1.getBalance());
+
+			} else {
+				System.out.println("Deposit failed.");
+			}
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			System.out.println("ERROR: " + e.getMessage());
+
+		}
+
+	}
+
+	private static void createAccount() {
 		Date openingDate = Date.valueOf("2020-02-15");
 
 		AccountDAO adao = new AccountDAOImpl();
@@ -28,7 +62,6 @@ public class AccountMain {
 		} else {
 			System.out.println("adding acc failed");
 		}
-
 	}
 
 }

@@ -15,7 +15,7 @@ public class AccountDAOImpl implements AccountDAO {
 	public int addAccount(Account account) {
 
 		try (Connection connection = PostgresConnection.getConnection()) {
-			String sql = "insert into account.account (accountType, accountnumber , openingbalance , balance , "
+			String sql = "insert into bank.account (accountType, accountnumber , openingbalance , balance , "
 					+ "opendingdate , isactive , deposit, withdrawl, interestrate ) \n"
 					+ "   values (?, ?, ?, ?, ?, ?, ?,  ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -57,8 +57,21 @@ public class AccountDAOImpl implements AccountDAO {
 
 	@Override
 	public int addDeposit(String accountNumber, double newDeposit) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		try (Connection connection = PostgresConnection.openConnection()) {
+			String sql = "update bank.account set balance = (balance + ?) where accountnumber = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setDouble(1, newDeposit);
+
+			preparedStatement.setString(2, accountNumber);
+
+			int count = preparedStatement.executeUpdate();
+			return count;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(ex);
+			return 0;
+		}
 	}
 
 	@Override

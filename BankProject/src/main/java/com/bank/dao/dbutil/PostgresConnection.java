@@ -7,27 +7,33 @@ import java.sql.SQLException;
 public class PostgresConnection {
 
 	private static Connection connection;
-	///disable constructor by makdig it private
+
+	/// disable constructor by makdig it private
 	private PostgresConnection() {
-		
+
 	}
+
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
-		
-		//step 2 open connection
-	if(connection == null) {	
-Class.forName("org.postgresql.Driver");
-System.out.println("Driver loaded succesfully");
 
-String url = "jdbc:postgresql://localhost:5432/Bank";
+		// step 2 open connection
+		if (connection == null) {
+			return openConnection();
+		} else {
+			return connection;
+		}
+
+	}
+
+	public static Connection openConnection() throws ClassNotFoundException, SQLException {
+		Class.forName("org.postgresql.Driver");
+		System.out.println("Driver loaded succesfully");
+
+		String url = "jdbc:postgresql://localhost:5432/Bank";
 //jdbc:postgresql://{host}[:{port}]/[{database}]
-String username = "postgres";
-String password = "Printer@2007";
+		String username = "postgres";
+		String password = "Printer@2007";
 
-connection = DriverManager.getConnection(url, username, password);
-return connection;
-	}else {
+		connection = DriverManager.getConnection(url, username, password);
 		return connection;
 	}
-
-}
 }
