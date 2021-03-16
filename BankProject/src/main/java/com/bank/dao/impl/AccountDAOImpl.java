@@ -50,7 +50,7 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public int viewBalancebyAccNumber(String accountNumber, double balance) {
+	public double viewBalancebyAccNumber(String accountNumber) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

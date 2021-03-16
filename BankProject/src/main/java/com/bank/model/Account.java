@@ -36,6 +36,9 @@ public class Account {
 		this.isactive = isactive;
 	}
 
+	public Account() {
+	}
+
 	public int getId() {
 		return id;
 	}
