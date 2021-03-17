@@ -1,23 +1,6 @@
 package com.bank.service.impl;
 
 public class PersonValidations {
-	public static boolean isValidId(int id) {
-		if (id < 100 || id > 1000) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-	public static boolean isEmployee(boolean isemployee) {
-		if (isemployee = false) {
-			return false;
-			//go to employee screen
-			
-		} else {
-			return true;
-			//go to customer screen
-		}
-	}
 
 	public static boolean isValidPersonName(String name) {
 		if (name != null && name.matches("[a-zA-Z]{3,20}")) {
@@ -43,15 +26,16 @@ public class PersonValidations {
 		}
 	}
 
-	public static boolean isValidPersonAge(int age) {
-		if (age > 18 && age < 150) {
+	public static boolean isValidPassword(String password) {
+		if (password != null && password.matches("[a-zA-Z]{3,20}")) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	public static boolean isValidPassword(String password) {
-		if (password != null && password.matches("[a-zA-Z]{3,20}")) {
+
+	public static boolean isValidEmail(String email) {
+		if (email != null && email.contains("@") && email.length() >= 6) {
 			return true;
 		} else {
 			return false;

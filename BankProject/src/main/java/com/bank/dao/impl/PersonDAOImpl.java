@@ -3,32 +3,30 @@ package com.bank.dao.impl;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.bank.dao.dbutil.PostgresConnection;
+import com.bank.exception.BusinessException;
 import com.bank.model.Person;
 
 public class PersonDAOImpl implements com.bank.dao.PersonDAO {
 
 	public int addPerson(Person person) {
-//		String sql = "INSERT INTO person(\n"
-//				+ "	personid, firstname, lastname, email, phonenumber, occupation, dob, password)\n"
-//				+ "	VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 		try (Connection connection = PostgresConnection.getConnection()) {
 			String sql = "INSERT INTO bank.person(\n"
-					+ "personid, firstname, lastname, email, phonenumber, occupation, dob, password, isEmployee)\n"
-					+ "	VALUES (?, ?, ?, ?, ?, ?, ?, ?,?);";
+					+ "firstname, lastname, email, password, phonenumber, dob, isEmployee) "
+					+ "	VALUES (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, person.getId());
-			preparedStatement.setString(2, person.getFirstname());
-			preparedStatement.setString(3, person.getLastname());
-			preparedStatement.setString(4, person.getEmail());
+			preparedStatement.setString(1, person.getFirstname());
+			preparedStatement.setString(2, person.getLastname());
+			preparedStatement.setString(3, person.getEmail());
+			preparedStatement.setString(4, person.getPassword());
 			preparedStatement.setString(5, person.getPhonenumber());
 
 			Date dobDate = Date.valueOf(person.getDob());
-			preparedStatement.setDate(7, dobDate);
-			preparedStatement.setString(8, person.getPassword());
-			preparedStatement.setBoolean(9, person.isEmployee());
+			preparedStatement.setDate(6, dobDate);
+			preparedStatement.setBoolean(7, person.isEmployee());
 			int count = preparedStatement.executeUpdate();
 			return count;
 		} catch (SQLException ex) {
@@ -59,15 +57,33 @@ public class PersonDAOImpl implements com.bank.dao.PersonDAO {
 	}
 
 	@Override
-	public Person login(String email, String password) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int logout(String email) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public Person verifyPassword(String email, String password) throws BusinessException {
+		try (Connection connection = PostgresConnection.openConnection()) {
+			String sql = "SELECT * FROM bank.person WHERE email = ? AND password = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, email);
+			preparedStatement.setString(2, password);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				Person person = new Person();
+				//firstname, lastname, email, password, phonenumber, dob, isEmployee
+				person.setFirstname(resultSet.getString("firstname"));
+				person.setLastname(resultSet.getString("lastname"));
+				person.setEmail(resultSet.getString("email"));
+				person.setEmployee(resultSet.getBoolean("isEmployee"));
+				return person;
+			}
+			return null;
+		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println(e);
+			throw new BusinessException("Internal error");
+		}
 	}
 
 }

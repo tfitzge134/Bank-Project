@@ -90,4 +90,10 @@ public class Person {
 		this.password = password;
 	}
 
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", isEmployee=" + isEmployee + ", firstname=" + firstname + ", lastname=" + lastname
+				+ ", email=" + email + ", phonenumber=" + phonenumber + ", dob=" + dob + "]";
+	}
+
 }
