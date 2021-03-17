@@ -22,17 +22,26 @@ Total Points: 23 points
 
 * As a user, I can login.
 	* 2 points
+	//funtionality Account CRUD service
+	//update
 * As a customer, I can apply for a new bank account with a starting balance.
 	* 3 points
+	//search account by accnumber
 * As a customer, I can view the balance of a specific account.
 	* 1 point
+	//withdrawl services
+	
 * As a customer, I can make a withdrawal or deposit to a specific account.
 	* 2 points
+	
+//check for invalid trans	
 * As the system, I reject invalid transactions.
 	* Ex:
 		* A withdrawal that would result in a negative balance.
 		* A deposit or withdrawal of negative money.
 	* 2 points
+	
+	//Employee view
 * As an employee, I can approve or reject an account.
 	* 2 points
 * As an employee, I can view a customer's bank accounts.
@@ -41,8 +50,11 @@ Total Points: 23 points
 	* 3 points
 * As a customer, I can post a money transfer to another account.
 	* 3 points
+	
+	//transfer service
 * As a customer, I can accept a money transfer from another account.
 	* 2 points
+	
 * As an employee, I can view a log of all transactions.
 	* 2 points
 
