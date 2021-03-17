@@ -17,7 +17,7 @@ public class AddressDAOImpl implements AddressDAO {
 			+ "	VALUES (?, ?, ?, ?, ?, ?);";
 	int c=0;
 	try {
-		Connection connection = PostgresConnection.getConnection();
+		Connection connection = PostgresConnection.openConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 		preparedStatement.setInt(1, address.getAddressid());
 		preparedStatement.setString(2, address.getAddress());

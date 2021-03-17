@@ -13,7 +13,7 @@ import com.bank.model.Person;
 public class PersonDAOImpl implements com.bank.dao.PersonDAO {
 
 	public int addPerson(Person person) {
-		try (Connection connection = PostgresConnection.getConnection()) {
+		try (Connection connection = PostgresConnection.openConnection()) {
 			String sql = "INSERT INTO bank.person(\n"
 					+ "firstname, lastname, email, password, phonenumber, dob, isEmployee) "
 					+ "	VALUES (?, ?, ?, ?, ?, ?, ?)";

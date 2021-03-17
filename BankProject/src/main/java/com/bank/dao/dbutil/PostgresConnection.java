@@ -13,7 +13,7 @@ public class PostgresConnection {
 
 	}
 
-	public static Connection getConnection() throws ClassNotFoundException, SQLException {
+	private static Connection getConnection() throws ClassNotFoundException, SQLException {
 
 		// step 2 open connection
 		if (connection == null) {

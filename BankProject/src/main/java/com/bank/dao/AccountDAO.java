@@ -1,26 +1,35 @@
 package com.bank.dao;
+
+import java.sql.Date;
 import java.util.List;
 
+import com.bank.exception.BusinessException;
 import com.bank.model.Account;
 
 public interface AccountDAO {
-	//CUSTOMER CAN APPLY X NEW ACC
+	// CUSTOMER CAN APPLY X NEW ACC
+	public int applyForAccount(int customerid, String accountType, double deposit, Date appliedDate);
+
+	// CUSTOMER CAN APPLY X NEW ACC
 	public int addAccount(Account account);
-	//CUSTOMER CAN VIEW BALANCE OF SPECIFIC ACC
+
+	// CUSTOMER CAN VIEW BALANCE OF SPECIFIC ACC
 	public double viewBalancebyAccNumber(String accountNumber);
-	//as a customer I can make a deposit
+
+	// as a customer I can make a deposit
 	public int addDeposit(String accountNumber, double newDeposit);
-	//as a customer I can make a withdrawl
+
+	// as a customer I can make a withdrawl
 	public int withdrawal(String accountNumber, double newWithdrawl);
-	//employee can active account
-	public int updateAccount(String accountNumber, 
-			String isactive);
-	public List<Account>getAllAccounts();
-	
-	
-	
-	
-		
-	
+
+	// employee can active account
+	public int updateAccount(String accountNumber, String isactive);
+
+	public List<Account> getAllAccounts();
+
+	// employee can get NEWLY APPLIED accounts
+	public List<Account> getAppliedNewAccounts() throws BusinessException;
+
+	public int approveAccount(int id, String accountNumber) throws BusinessException;
 
 }

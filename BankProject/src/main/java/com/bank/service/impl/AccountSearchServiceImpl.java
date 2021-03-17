@@ -14,7 +14,7 @@ public class AccountSearchServiceImpl implements AccountSearchService {
 
 	@Override
 	public Account getAccountById(int id) throws BusinessException {
-		try (Connection connection = PostgresConnection.getConnection()) {
+		try (Connection connection = PostgresConnection.openConnection()) {
 			String sql = "SELECT  (accountType, accountnumber , balance , " + "isactive) "
 
 					+ " FROM bank.account WHERE id = ?";

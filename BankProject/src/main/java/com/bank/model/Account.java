@@ -17,11 +17,10 @@ public class Account {
 	private int customerid;
 	private boolean isactive;
 	private String accountType;
+	private String status;
 
-	public Account(String accountType, int branchid, String accountnumber, double openingbalance, 
-			double balance,
-			Date opendingdate, double deposit, double withdrawl, double interesrate, 
-			int customerid, boolean isactive) {
+	public Account(String accountType, int branchid, String accountnumber, double openingbalance, double balance,
+			Date opendingdate, double deposit, double withdrawl, double interesrate, int customerid, boolean isactive) {
 		super();
 		this.accountType = accountType;
 		this.branchid = branchid;
@@ -135,12 +134,20 @@ public class Account {
 		this.accountType = accountType;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "Account [id=" + id + ", accountnumber=" + accountnumber + ", branchid=" + branchid + ", openingbalance="
 				+ openingbalance + ", balance=" + balance + ", opendingdate=" + opendingdate + ", deposit=" + deposit
 				+ ", withdrawl=" + withdrawl + ", interesrate=" + interesrate + ", customerid=" + customerid
-				+ ", isactive=" + isactive + ", accountType=" + accountType + "]";
+				+ ", isactive=" + isactive + ", accountType=" + accountType + ", status=" + status + "]";
 	}
 
 }
