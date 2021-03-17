@@ -20,4 +20,22 @@ public class PersonSearchServiceImpl implements PersonSearchService {
 		return null;
 	}
 
+	@Override
+	public Person getIsEmployee(boolean id) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Person getPersonByEmail(String email) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Person getPersonByPassword(String password) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
