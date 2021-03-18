@@ -10,10 +10,14 @@ import com.bank.dao.impl.AccountDAOImpl;
 import com.bank.exception.BusinessException;
 import com.bank.model.Account;
 import com.bank.model.Person;
+import com.bank.service.AccountSearchService;
 import com.bank.service.BankService;
 import com.bank.service.PersonCRUDService;
+import com.bank.service.PersonSearchService;
+import com.bank.service.impl.AccountSearchServiceImpl;
 import com.bank.service.impl.BankServiceImpl;
 import com.bank.service.impl.PersonCRUDServiceImpl;
+import com.bank.service.impl.PersonSearchServiceImpl;
 
 public class BankMain {
 
@@ -30,7 +34,7 @@ public class BankMain {
 		System.out.println("================================================");
 		int ch = 0;
 		do {
-			System.out.println("-----------------");
+			System.out.println("\n-----------------");
 			System.out.println("Bank MENU");
 			System.out.println("-----------------");
 			System.out.println("1)Login");
@@ -65,7 +69,7 @@ public class BankMain {
 				break;
 			case 0:
 				System.out.println("Thankq for using the Bank APP V1.0.....");
-
+				System.exit(0);
 				break;
 
 			default:
@@ -185,7 +189,7 @@ public class BankMain {
 	private static void employeeMenu() {
 		int ch = 0;
 		do {
-			System.out.println("------------EMPLOYEE MENU---------");
+			System.out.println("\n------------EMPLOYEE MENU---------");
 			System.out.println("1)Approve or reject Accounts");
 			System.out.println("2)View customer's bank accounts");
 
@@ -197,38 +201,10 @@ public class BankMain {
 			}
 			switch (ch) {
 			case 1:
-				System.out.println("....1)Approve or reject Accounts");
-//				approveOrRejectAccounts();
-				AccountDAO accountDAO = new AccountDAOImpl();
-				try {
-					List<Account> appliedNewAccounts = accountDAO.getAppliedNewAccounts();
-					for (Account account : appliedNewAccounts) {
-
-						System.out.println("NEW Account Request: Customer Id: " + account.getCustomerid()
-								+ ", AccounType: " + account.getAccountType() + ", Openingbalance: "
-								+ account.getOpeningbalance());
-						System.out.println("Enter Approve or Reject");
-						String status = scanner.nextLine();
-						if (status.equals("Approve")) {
-							System.out.println("Enter Account Number");
-							String accountNumber = scanner.nextLine();
-							int c = accountDAO.approveAccount(account.getId(), accountNumber);
-							if (c > 0) {
-								System.out.println("Account Approved.");
-							} else {
-								System.out.println("Account Approval FAILED.");
-							}
-						} else {
-							System.out.println("...REJECTED....");
-						}
-					}
-				} catch (BusinessException e) {
-					e.printStackTrace();
-				}
+				approveOrRejectAccount();
 				break;
 			case 2:
-				System.out.println("....2)View customer's bank accounts");
-
+				viewCustomerAccounts();
 				break;
 
 			case 0:
@@ -241,33 +217,86 @@ public class BankMain {
 		} while (ch != 0);
 	}
 
+	private static void approveOrRejectAccount() {
+		System.out.println("....1)Approve or reject Accounts");
+//				approveOrRejectAccounts();
+		AccountDAO accountDAO = new AccountDAOImpl();
+		try {
+			List<Account> appliedNewAccounts = accountDAO.getAppliedNewAccounts();
+			if (appliedNewAccounts == null || appliedNewAccounts.size() == 0) {
+				System.out.println("...NO Accounts pending for Approval....");
+				return;
+			}
+			for (Account account : appliedNewAccounts) {
+
+				System.out.println("NEW Account Request: Customer Id: " + account.getCustomerid() + ", AccounType: "
+						+ account.getAccountType() + ", Openingbalance: " + account.getOpeningbalance());
+				System.out.println("Enter Approve or Reject");
+				String status = scanner.nextLine();
+				if (status.equalsIgnoreCase("Approve")) {
+					System.out.println("Enter Account Number");
+					String accountNumber = scanner.nextLine();
+					int c = accountDAO.approveAccount(account.getId(), accountNumber);
+					if (c > 0) {
+						System.out.println("...Account Approved....");
+					} else {
+						System.out.println("Account Approval FAILED.");
+					}
+				} else if (status.equalsIgnoreCase("Reject")) {
+					int c = accountDAO.rejectAccount(account.getId());
+					if (c > 0) {
+						System.out.println("...Account REJECTED....");
+					} else {
+						System.out.println("Account REJECTION FAILED.");
+					}
+				} else {
+					System.out.println("...Account Status NOT Changed....");
+
+				}
+			}
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private static void signup(Scanner scanner) {
 		Person person = new Person();
 
 		System.out.println("Enter below Details to Create user Account");
 
-		System.out.println("Enter email:");
-		person.setEmail(scanner.nextLine());
-
-		System.out.println("Enter password:");
-		person.setPassword(scanner.nextLine());
-
-		System.out.println("Enter DoB:");
-		person.setDob(scanner.nextLine());
-
-		System.out.println("Enter First Name:");
-		person.setFirstname(scanner.nextLine());
-
-		System.out.println("Enter Last Name:");
-		person.setLastname(scanner.nextLine());
-
-		System.out.println("Enter phonenumber:");
-		person.setPhonenumber(scanner.nextLine());
-
-		System.out.println("Enter Is Employee:");
-		person.setEmployee(Boolean.valueOf(scanner.nextLine()));
-
 		try {
+			System.out.println("Enter email:");
+			String email = scanner.nextLine();
+
+			PersonSearchService personSearchService = new PersonSearchServiceImpl();
+			Person personByEmail = personSearchService.getPersonByEmail(email);
+			if(personByEmail != null) {
+				System.out.println("...Customer EXISTS for email: " + email +
+						"\n Try with a different email id.");
+				return;
+			}
+			else {
+				person.setEmail(email);
+			}
+			
+			System.out.println("Enter password:");
+			person.setPassword(scanner.nextLine());
+
+			System.out.println("Enter DoB:");
+			person.setDob(scanner.nextLine());
+
+			System.out.println("Enter First Name:");
+			person.setFirstname(scanner.nextLine());
+
+			System.out.println("Enter Last Name:");
+			person.setLastname(scanner.nextLine());
+
+			System.out.println("Enter phonenumber:");
+			person.setPhonenumber(scanner.nextLine());
+
+			System.out.println("Enter Is Employee:");
+			person.setEmployee(Boolean.valueOf(scanner.nextLine()));
+
 			PersonCRUDService personCrudService = new PersonCRUDServiceImpl();
 			if (personCrudService.createPerson(person) == 1) {
 				System.out.println("Person Registered Successfully with below details");
@@ -276,6 +305,36 @@ public class BankMain {
 		} catch (BusinessException e) {
 			System.out.println(e.getMessage());
 			System.out.println("------------RETRY WITH VALID VALUES---------");
+		}
+	}
+
+	private static void viewCustomerAccounts() {
+		System.out.println("....2)View customer's bank accounts");
+		PersonSearchService personSearchService = new PersonSearchServiceImpl();
+		AccountSearchService accountSearchService = new AccountSearchServiceImpl();
+
+		try {
+			System.out.println("Enter Customer Email:");
+			String email = scanner.nextLine();
+
+			Person person = personSearchService.getPersonByEmail(email);
+
+			if (person == null) {
+				System.out.println("...No customer found for email: " + email);
+				return;
+			} else {
+				System.out.println("...Customer found for email: " + person);
+			}
+			List<Account> accounts = accountSearchService.getAccountByCustomerId(person.getId());
+			for (Account account : accounts) {
+
+				System.out.println("Account of Customer Id: " + account.getCustomerid() + ", Accountnumber: "
+						+ account.getAccountnumber() + ", AccounType: " + account.getAccountType()
+						+ ", Openingbalance: " + account.getOpeningbalance() + ", Balance: " + account.getBalance()
+						+ ", Status: " + account.getStatus());
+			}
+		} catch (BusinessException e) {
+			e.printStackTrace();
 		}
 	}
 

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.bank.dao.dbutil.PostgresConnection;
 import com.bank.exception.BusinessException;
@@ -52,6 +54,32 @@ public class AccountSearchServiceImpl implements AccountSearchService {
 				return account;
 			}
 			return null;
+		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println(e);
+			throw new BusinessException("Internal error");
+		}
+	}
+
+	@Override
+	public List<Account> getAccountByCustomerId(int customerid) throws BusinessException {
+		List<Account> accounts = new ArrayList<>();
+		try (Connection connection = PostgresConnection.openConnection()) {
+			String sql = "SELECT * FROM bank.account WHERE customerid = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, customerid);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Account account = new Account();
+				account.setCustomerid(resultSet.getInt("customerid"));
+				account.setAccountType(resultSet.getString("accountType"));
+				account.setAccountnumber(resultSet.getString("accountnumber"));
+				account.setStatus(resultSet.getString("status"));
+				account.setBalance(resultSet.getDouble("balance"));
+				account.setOpeningbalance(resultSet.getDouble("openingbalance"));
+				account.setIsactive(resultSet.getBoolean("isactive"));
+				accounts.add(account);
+			}
+			return accounts;
 		} catch (ClassNotFoundException | SQLException e) {
 			System.out.println(e);
 			throw new BusinessException("Internal error");

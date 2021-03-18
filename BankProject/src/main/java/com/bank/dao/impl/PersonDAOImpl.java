@@ -12,7 +12,7 @@ import com.bank.model.Person;
 
 public class PersonDAOImpl implements com.bank.dao.PersonDAO {
 
-	public int addPerson(Person person) {
+	public int addPerson(Person person) throws BusinessException {
 		try (Connection connection = PostgresConnection.openConnection()) {
 			String sql = "INSERT INTO bank.person(\n"
 					+ "firstname, lastname, email, password, phonenumber, dob, isEmployee) "
@@ -30,18 +30,20 @@ public class PersonDAOImpl implements com.bank.dao.PersonDAO {
 			int count = preparedStatement.executeUpdate();
 			return count;
 		} catch (SQLException ex) {
-			String message = ex.getMessage();
-			if (message.contains("ERROR: duplicate key")) {
-				System.out.println("The Primary KEY (Person Id) already exists: " + person.getId());
-			} else {
-				System.out.println(ex);
-			}
-			return 0;
+			ex.printStackTrace();
+			new BusinessException(ex.getMessage());
+//			String message = ex.getMessage();
+//			if (message.contains("ERROR: duplicate key")) {
+//				System.out.println("The Primary KEY (Person Id) already exists: " + person.getId());
+//			} else {
+//				System.out.println(ex);
+//			}
+//			return 0;
 		} catch (ClassNotFoundException e) {
-			System.out.println(e);
 			e.printStackTrace();
-			return 0;
+			throw new BusinessException("Internal error");
 		}
+		return 0;
 	}
 
 	@Override

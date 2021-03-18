@@ -26,7 +26,7 @@ public class PostgresConnection {
 
 	public static Connection openConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("org.postgresql.Driver");
-		System.out.println("Driver loaded succesfully");
+		//System.out.println("Driver loaded succesfully");
 
 		String url = "jdbc:postgresql://localhost:5432/Bank";
 //jdbc:postgresql://{host}[:{port}]/[{database}]

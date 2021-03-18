@@ -31,5 +31,7 @@ public interface AccountDAO {
 	public List<Account> getAppliedNewAccounts() throws BusinessException;
 
 	public int approveAccount(int id, String accountNumber) throws BusinessException;
+	
+	public int rejectAccount(int id) throws BusinessException;
 
 }

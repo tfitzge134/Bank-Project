@@ -106,7 +106,8 @@ public class AccountDAOImpl implements AccountDAO {
 	public List<Account> getAppliedNewAccounts() throws BusinessException {
 		List<Account> list = new ArrayList<>();
 		try (Connection connection = PostgresConnection.openConnection()) {
-			String sql = "SELECT * FROM bank.account WHERE accountnumber is NULL AND " + " status is NULL";
+			String sql = "SELECT * FROM bank.account WHERE  "
+					+ "status is NULL or status = 'Rejected' ";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -143,5 +144,22 @@ public class AccountDAOImpl implements AccountDAO {
 			throw new BusinessException("Internal error");
 		}
 
+	}
+
+	@Override
+	public int rejectAccount(int id) throws BusinessException {
+		try (Connection connection = PostgresConnection.openConnection()) {
+			String sql = "UPDATE bank.account set status = ? "
+					+ " WHERE id = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, "Rejected");
+			preparedStatement.setInt(2, id);
+			int count = preparedStatement.executeUpdate();
+			return count;
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+			System.out.println(e);
+			throw new BusinessException("Internal error");
+		}
 	}
 }

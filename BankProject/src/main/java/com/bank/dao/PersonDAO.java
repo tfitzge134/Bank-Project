@@ -6,7 +6,7 @@ import com.bank.model.Person;
 public interface PersonDAO {
 	public boolean isExisting(String email);
 
-	public int addPerson(Person person);
+	public int addPerson(Person person) throws BusinessException;
 
 	public Person getPerson(int id);
 
