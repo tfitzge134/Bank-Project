@@ -19,20 +19,19 @@ public class AccountDAOImpl implements AccountDAO {
 	public int addAccount(Account account) {
 
 		try (Connection connection = PostgresConnection.openConnection()) {
-			String sql = "insert into bank.account (accountType, accountnumber , openingbalance , balance , "
-					+ "opendingdate , isactive , deposit, withdrawl, interestrate ) \n"
-					+ "   values (?, ?, ?, ?, ?, ?, ?,  ?, ?)";
+			String sql = "insert into bank.account (accountType, accountnumber "
+					+ ", openingbalance , "
+					+ "opendingdate , isactive"
+					+ ", customerid ) \n"
+					+ "   values (?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, account.getAccountType());
 
 			preparedStatement.setString(2, account.getAccountnumber());
 			preparedStatement.setDouble(3, account.getOpeningbalance());
-			preparedStatement.setDouble(4, account.getBalance());
-			preparedStatement.setDate(5, account.getOpendingdate());
-			preparedStatement.setBoolean(6, account.getIsactive());
-			preparedStatement.setDouble(7, account.getDeposit());
-			preparedStatement.setDouble(8, account.getWithdrawl());
-			preparedStatement.setDouble(9, account.getInteresrate());
+			preparedStatement.setDate(4, account.getOpendingdate());
+			preparedStatement.setBoolean(5, account.getIsactive());
+			preparedStatement.setDouble(6, account.getCustomerid());
 
 			int count = preparedStatement.executeUpdate();
 			return count;
@@ -107,7 +106,7 @@ public class AccountDAOImpl implements AccountDAO {
 		List<Account> list = new ArrayList<>();
 		try (Connection connection = PostgresConnection.openConnection()) {
 			String sql = "SELECT * FROM bank.account WHERE  "
-					+ "status is NULL or status = 'Rejected' ";
+					+ "status is NULL or status = ' '";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {

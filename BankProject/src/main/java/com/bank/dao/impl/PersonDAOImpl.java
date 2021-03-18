@@ -75,6 +75,7 @@ public class PersonDAOImpl implements com.bank.dao.PersonDAO {
 			if (resultSet.next()) {
 				Person person = new Person();
 				//firstname, lastname, email, password, phonenumber, dob, isEmployee
+				person.setId(resultSet.getInt("id"));
 				person.setFirstname(resultSet.getString("firstname"));
 				person.setLastname(resultSet.getString("lastname"));
 				person.setEmail(resultSet.getString("email"));
