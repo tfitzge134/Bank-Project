@@ -11,7 +11,7 @@ public interface AccountDAO {
 	public int applyForAccount(int customerid, String accountType, double deposit, Date appliedDate);
 
 	// CUSTOMER CAN APPLY X NEW ACC
-	public int addAccount(Account account);
+	public int addAccount(Account account) throws BusinessException;
 
 	// CUSTOMER CAN VIEW BALANCE OF SPECIFIC ACC
 	public double viewBalancebyAccNumber(String accountNumber);

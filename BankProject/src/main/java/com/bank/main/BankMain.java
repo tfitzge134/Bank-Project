@@ -11,10 +11,12 @@ import com.bank.exception.BusinessException;
 import com.bank.model.Account;
 import com.bank.model.Person;
 import com.bank.service.AccountSearchService;
+import com.bank.service.AccountService;
 import com.bank.service.BankService;
 import com.bank.service.PersonCRUDService;
 import com.bank.service.PersonSearchService;
 import com.bank.service.impl.AccountSearchServiceImpl;
+import com.bank.service.impl.AccountServiceImpl;
 import com.bank.service.impl.BankServiceImpl;
 import com.bank.service.impl.PersonCRUDServiceImpl;
 import com.bank.service.impl.PersonSearchServiceImpl;
@@ -117,8 +119,11 @@ public class BankMain {
 		do {
 			System.out.println("------------CUSTOMER MENU---------");
 			System.out.println("1)Apply for new Bank Account");
-			System.out.println("2)View Account Balance");
-			System.out.println("3)Transfer Money");
+			System.out.println("2)View My Accounts");
+			System.out.println("3)View Account Balance");
+			System.out.println("4)Deposit");
+			System.out.println("5)Withdraw");
+			System.out.println("6)Transfer Money");
 			System.out.println("0)Back to Main Menu");
 			System.out.println("-----------------");
 
@@ -132,11 +137,24 @@ public class BankMain {
 				applyForNewBankAccount();
 				break;
 			case 2:
-				System.out.println("....2)View Account Balance");
-
+				System.out.println("....2)View My Accounts");
+				viewMyAccounts();
 				break;
 			case 3:
-				System.out.println("3)Transfer Money");
+				System.out.println("....3)View Account Balance");
+				viewAccountBalance();
+				break;
+			case 4:
+				System.out.println("....4)Deposit");
+				deposit();
+				break;
+			case 5:
+				System.out.println("....5)Withdraw");
+				withdraw();
+				break;
+			case 6:
+				System.out.println("6)Transfer Money");
+				transferMoney();
 				break;
 			case 0:
 				System.out.println("....0)Back to Main Menu");
@@ -147,6 +165,84 @@ public class BankMain {
 			}
 
 		} while (ch != 0);
+	}
+
+	private static void transferMoney() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void withdraw() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void deposit() {
+		System.out.println("Enter below Details to deposit.");
+
+		System.out.println("Enter account number:");
+		String accountnumber = scanner.nextLine();
+
+		System.out.println("Enter amount:");
+		double amount = 0.0;
+		try {
+			amount = Double.parseDouble(scanner.nextLine());
+		} catch (NumberFormatException ex) {
+			System.out.println("Enter valid amount for deposit:");
+			System.out.println("---------------------");
+			return;
+		}
+		try {
+			AccountSearchService accountSearchService = new AccountSearchServiceImpl();
+			Account account = accountSearchService.getAccountByAccountNumber(accountnumber);
+			if(account == null) {
+				System.out.println("....Account NOT found.");
+				return;
+			}
+			System.out.println("Current Balance: " + account.getBalance());
+			AccountService accountService = new AccountServiceImpl();
+			int c = accountService.deposit(accountnumber, amount);
+			if (c > 0) {
+				System.out.println("Deposit success.");
+				Account account1 = accountSearchService.getAccountByAccountNumber(accountnumber);
+				System.out.println("New Balance: " + account1.getBalance());
+
+			} else {
+				System.out.println("Deposit failed.");
+			}
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			System.out.println("ERROR: " + e.getMessage());
+
+		}
+	}
+
+	private static void viewAccountBalance() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void viewMyAccounts() {
+		System.out.println("....2)View My Accounts");
+		try {
+			AccountSearchService accountSearchService = new AccountSearchServiceImpl();
+			List<Account> accounts = accountSearchService.getAccountByCustomerId(currentUser.getId());
+			if (accounts == null || accounts.size() == 0) {
+				System.out.println("...NO Accounts Found....");
+				return;
+			}
+			for (Account account : accounts) {
+				System.out.println("Account Number: " + account.getAccountnumber() 
+						+ ", AccounType: " + account.getAccountType() 
+						+ ", Openingbalance: " + account.getOpeningbalance()
+						+ ", Balance: " + account.getBalance()
+						+ ", Status: " + account.getStatus()
+						);
+			}
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private static void applyForNewBankAccount() {

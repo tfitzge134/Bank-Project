@@ -54,7 +54,14 @@ public class AccountMain {
 //		
 //	}
 		Account a = new Account("CA", 1, "", 25.0, 25.0, openingDate, 10.00, 0.00, 2.0, 3, false);
-		int c1 = adao.addAccount(a);
+		int c1 = 0;
+		try {
+			c1 = adao.addAccount(a);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			System.out.println("ERROR: " + e.getMessage());
+
+		}
 		if (c1 > 0) {
 			System.out.println("acc added");
 			System.out.println(a);

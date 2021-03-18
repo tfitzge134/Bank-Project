@@ -16,7 +16,7 @@ import com.bank.model.Account;
 public class AccountDAOImpl implements AccountDAO {
 
 	@Override
-	public int addAccount(Account account) {
+	public int addAccount(Account account) throws BusinessException {
 
 		try (Connection connection = PostgresConnection.openConnection()) {
 			String sql = "insert into bank.account (accountType, accountnumber "
@@ -37,13 +37,7 @@ public class AccountDAOImpl implements AccountDAO {
 			return count;
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-			String message = ex.getMessage();
-			if (message.contains("ERROR: duplicate key")) {
-				System.out.println("The Primary KEY (Person Id) already exists: " + account.getAccountnumber());
-			} else {
-				System.out.println(ex);
-			}
-			return 0;
+			throw new BusinessException("Internal error");
 		} catch (ClassNotFoundException e) {
 			System.out.println(e);
 			e.printStackTrace();
