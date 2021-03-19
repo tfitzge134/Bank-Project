@@ -28,7 +28,7 @@ public class BankMain {
 	private static Person currentUser;
 
 	public static void main(String[] args) {
-		log.debug("HEllo!!!!");
+		log.info("Bank Appplication Started.");
 
 		System.out.println("Welcome to Wonderlad Bank WHERE YOU MONEY IS OUR MONEY");
 		System.out.println("================================================");
@@ -65,7 +65,6 @@ public class BankMain {
 				break;
 			case 0:
 				System.out.println("Thankq for using the Bank APP V1.0.....");
-				System.exit(0);
 				break;
 
 			default:
@@ -73,7 +72,7 @@ public class BankMain {
 				break;
 			}
 		} while (ch != 0);
-
+		log.info("Bank Appplication Ended.\n------------");
 	}
 
 	private static void login(Scanner scanner) {
@@ -103,6 +102,7 @@ public class BankMain {
 				System.out.println("Person LOGIN FAILED!");
 			}
 		} catch (BusinessException e) {
+			log.error(e);
 			System.out.println(e.getMessage());
 			System.out.println("------------RETRY WITH VALID VALUES---------");
 		}
@@ -197,6 +197,7 @@ public class BankMain {
 				System.out.println("Transfer failed");
 			}
 		} catch (BusinessException e) {
+			log.error(e);
 			e.printStackTrace();
 			System.out.println("ERROR: " + e.getMessage());
 
@@ -241,6 +242,7 @@ public class BankMain {
 				System.out.println("Account failed");
 			}
 		} catch (BusinessException e) {
+			log.error(e);
 			e.printStackTrace();
 			System.out.println("ERROR: " + e.getMessage());
 
@@ -281,6 +283,7 @@ public class BankMain {
 				System.out.println("Deposit failed.");
 			}
 		} catch (BusinessException e) {
+			log.error(e);
 			e.printStackTrace();
 			System.out.println("ERROR: " + e.getMessage());
 
@@ -305,6 +308,7 @@ public class BankMain {
 //				System.out.println(".");
 //			}
 		} catch (BusinessException e) {
+			log.error(e);
 			e.printStackTrace();
 			System.out.println("ERROR: " + e.getMessage());
 
@@ -335,7 +339,9 @@ public class BankMain {
 						);
 			}
 		} catch (BusinessException e) {
+			log.error(e);
 			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 	}
@@ -372,6 +378,8 @@ public class BankMain {
 				System.out.println("Account application FAILED!");
 			}
 		} catch (BusinessException e) {
+			log.error(e);
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
 
@@ -445,6 +453,8 @@ public class BankMain {
 				}
 			}
 		} catch (BusinessException e) {
+			log.error(e);
+			e.printStackTrace();
 			System.out.println("...ERROR: " + e.getMessage());
 		}
 	}
@@ -493,6 +503,8 @@ public class BankMain {
 				System.out.println(person);
 			}
 		} catch (BusinessException e) {
+			log.error(e);
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			System.out.println("------------RETRY WITH VALID VALUES---------");
 		}
@@ -524,7 +536,9 @@ public class BankMain {
 						+ ", Status: " + account.getStatus());
 			}
 		} catch (BusinessException e) {
+			log.error(e);
 			e.printStackTrace();
+			
 		}
 	}
 

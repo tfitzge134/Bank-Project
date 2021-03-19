@@ -1,3 +1,6 @@
 an.example/
 target/
+*.log
+*.class
+
 
