@@ -20,7 +20,7 @@ public interface AccountDAO {
 	public int addDeposit(String accountNumber, double newDeposit);
 
 	// as a customer I can make a withdrawl
-	public int withdrawal(String accountNumber, double newWithdrawl);
+	public int withdraw(String accountNumber, double amount);
 
 	// employee can active account
 	public int updateAccount(String accountNumber, String isactive);

@@ -11,4 +11,14 @@ public class AccountValidations {
 		return false;
 	}
 
+	public static boolean isValidAccountNumber(String accountNumber) {
+		if (accountNumber != null && !accountNumber.isEmpty()) {
+			if (accountNumber.length() == 10) {
+				//PENDING check for pattern n-nnnnnnnn using regex
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

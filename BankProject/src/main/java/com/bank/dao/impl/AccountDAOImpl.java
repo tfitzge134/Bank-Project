@@ -72,9 +72,24 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public int withdrawal(String accountNumber, double newWithdrawl) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int withdraw(String accountNumber, double amount) {
+		try (Connection connection = PostgresConnection.openConnection()) {
+			String sql = "update bank.account set balance = (balance - ?) where accountnumber = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setDouble(1, amount);
+
+			preparedStatement.setString(2, accountNumber);
+
+			int count = preparedStatement.executeUpdate();
+			return count;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(ex);
+			return 0;
+		}		
+		
+				
+		
 	}
 
 	@Override

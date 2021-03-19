@@ -44,12 +44,6 @@ public class BankMain {
 
 			System.out.println("0)Logout");
 
-//			System.out.println("3)Delete Bank");
-//			System.out.println("4)List All Banks");
-//			System.out.println("5)Search Bank by any of these id,name,age,city,gender");
-//			System.out.println("6)List all Teams");
-//			System.out.println("7)Add Team");
-//			System.out.println("8)EXIT");
 			System.out.println("Please enter an appropriate Search Option(1-8)");
 			try {
 				ch = Integer.parseInt(scanner.nextLine());
@@ -168,13 +162,89 @@ public class BankMain {
 	}
 
 	private static void transferMoney() {
-		// TODO Auto-generated method stub
-		
-	}
+		System.out.println("Enter below Details to withdraw.");
 
-	private static void withdraw() {
-		// TODO Auto-generated method stub
+		System.out.println("Enter SOURCE account number:");
+		String sourceAccount = scanner.nextLine();
 		
+		System.out.println("Enter DESTINATION account number:");
+		String destAccount = scanner.nextLine();
+
+		System.out.println("Enter amount:");
+		double amount = 0.0;
+		try {
+			amount = Double.parseDouble(scanner.nextLine());
+		} catch (NumberFormatException ex) {
+			System.out.println("Enter valid amount for withdraw:");
+			System.out.println("---------------------");
+			return;
+		}
+		
+		try {
+			AccountSearchService accountSearchService = new AccountSearchServiceImpl();
+			//System.out.println("Current Balance: " + account.getBalance());
+			AccountService accountService = new AccountServiceImpl();
+			int c = accountService.transfer(sourceAccount, destAccount, amount);
+			//double b = account.getBalance();
+			if (c > 0) {
+				System.out.println("Transfer success.");
+				Account source = accountSearchService.getAccountByAccountNumber(sourceAccount);
+				Account dest = accountSearchService.getAccountByAccountNumber(destAccount);
+				System.out.println("Source Account New Balance: " + source.getBalance());
+				System.out.println("Dest Account New Balance: " + dest.getBalance());
+			}
+			else {
+				System.out.println("Transfer failed");
+			}
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			System.out.println("ERROR: " + e.getMessage());
+
+		}
+
+	}
+///////////////////////////////////////////////////////////
+	private static void withdraw() {
+		System.out.println("Enter below Details to withdraw.");
+
+		System.out.println("Enter account number:");
+		String accountnumber = scanner.nextLine();
+
+		System.out.println("Enter amount:");
+		double amount = 0.0;
+		try {
+			amount = Double.parseDouble(scanner.nextLine());
+		} catch (NumberFormatException ex) {
+			System.out.println("Enter valid amount for withdraw:");
+			System.out.println("---------------------");
+			return;
+		}
+		try {
+			AccountSearchService accountSearchService = new AccountSearchServiceImpl();
+			Account account = accountSearchService.getAccountByAccountNumber(accountnumber);
+			if(account == null) {
+				System.out.println("....Account NOT found.");
+				return;
+			}
+			//System.out.println("Current Balance: " + account.getBalance());
+			AccountService accountService = new AccountServiceImpl();
+			int c = accountService.withdraw(accountnumber, amount);
+			//double b = account.getBalance();
+			if (c > 0) {
+				System.out.println("Withdraw success.");
+				Account account1 = accountSearchService.getAccountByAccountNumber(accountnumber);
+				System.out.println("New Balance: " + account1.getBalance());
+			} 
+			else if (account.getBalance() < amount) {
+				System.out.println( "INSUFFFIENT_BALANCE");
+			}else {
+				System.out.println("Account failed");
+			}
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			System.out.println("ERROR: " + e.getMessage());
+
+		}
 	}
 
 	private static void deposit() {
@@ -216,11 +286,36 @@ public class BankMain {
 
 		}
 	}
-
+////////
 	private static void viewAccountBalance() {
 		// TODO Auto-generated method stub
+		//System.out.println("....2)View balance");
 		
+		System.out.println("Enter account number:");
+		String accountnumber = scanner.nextLine();
+		try {
+			AccountSearchService accountSearchService = new AccountSearchServiceImpl();
+			Account account = accountSearchService.getAccountByAccountNumber(accountnumber);
+			if(account == null) {
+				System.out.println("....Account NOT found.");
+				return;
+			}
+			System.out.println("Current Balance: " + account.getBalance());
+//			 {
+//				System.out.println(".");
+//			}
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			System.out.println("ERROR: " + e.getMessage());
+
+		}
+	
 	}
+			
+			//System.out.println("Current Balance: " + account.getBalance());
+////	
+		
+		
 
 	private static void viewMyAccounts() {
 		System.out.println("....2)View My Accounts");
@@ -268,7 +363,7 @@ public class BankMain {
 			account.setCustomerid(currentUser.getId());
 			account.setOpeningbalance(deposit);
 
-			int c = bankService.addAccount(account);
+			int c = bankService.applyForNewAccount(account);
 
 			System.out.println("------------Result---------");
 			if (c != 0) {
@@ -315,10 +410,9 @@ public class BankMain {
 
 	private static void approveOrRejectAccount() {
 		System.out.println("....1)Approve or reject Accounts");
-//				approveOrRejectAccounts();
-		AccountDAO accountDAO = new AccountDAOImpl();
+		BankService bankService = new BankServiceImpl();
 		try {
-			List<Account> appliedNewAccounts = accountDAO.getAppliedNewAccounts();
+			List<Account> appliedNewAccounts = bankService.getAppliedNewAccounts();
 			if (appliedNewAccounts == null || appliedNewAccounts.size() == 0) {
 				System.out.println("...NO Accounts pending for Approval....");
 				return;
@@ -332,14 +426,14 @@ public class BankMain {
 				if (status.equalsIgnoreCase("Approve")) {
 					System.out.println("Enter Account Number");
 					String accountNumber = scanner.nextLine();
-					int c = accountDAO.approveAccount(account.getId(), accountNumber);
+					int c = bankService.approveAccount(account.getId(), accountNumber);
 					if (c > 0) {
 						System.out.println("...Account Approved....");
 					} else {
 						System.out.println("Account Approval FAILED.");
 					}
 				} else if (status.equalsIgnoreCase("Reject")) {
-					int c = accountDAO.rejectAccount(account.getId());
+					int c = bankService.rejectAccount(account.getId());
 					if (c > 0) {
 						System.out.println("...Account REJECTED....");
 					} else {
@@ -351,7 +445,7 @@ public class BankMain {
 				}
 			}
 		} catch (BusinessException e) {
-			e.printStackTrace();
+			System.out.println("...ERROR: " + e.getMessage());
 		}
 	}
 
