@@ -30,21 +30,21 @@ public class BankMain {
 	public static void main(String[] args) {
 		log.info("Bank Appplication Started.");
 
-		System.out.println("Welcome to Wonderlad Bank WHERE YOU MONEY IS OUR MONEY");
-		System.out.println("================================================");
-		System.out.println("Teresa's Bank App V1.0");
-		System.out.println("================================================");
+		log.info("Welcome to Wonderlad Bank WHERE YOU MONEY IS OUR MONEY");
+		log.info("================================================");
+		log.info("Teresa's Bank App V1.0");
+		log.info("================================================");
 		int ch = 0;
 		do {
-			System.out.println("\n-----------------");
-			System.out.println("Bank MENU");
-			System.out.println("-----------------");
-			System.out.println("1)Login");
-			System.out.println("2)Signup for User Account");
+			log.info("\n-----------------");
+			log.info("Bank MENU");
+			log.info("-----------------");
+			log.info("1)Login");
+			log.info("2)Signup for User Account");
 
-			System.out.println("0)Logout");
+			log.info("0)Logout");
 
-			System.out.println("Please enter an appropriate Search Option(1-8)");
+			log.info("Please enter an appropriate Search Option(1-8)");
 			try {
 				ch = Integer.parseInt(scanner.nextLine());
 			} catch (NumberFormatException e) {
@@ -60,15 +60,15 @@ public class BankMain {
 
 				break;
 			case 4:
-				System.out.println("Under construction");
+				log.info("Under construction");
 
 				break;
 			case 0:
-				System.out.println("Thankq for using the Bank APP V1.0.....");
+				log.info("Thankq for using the Bank APP V1.0.....");
 				break;
 
 			default:
-				System.out.println("Invalid Choice... Please enter a proper choice between 1-? only.......");
+				log.info("Invalid Choice... Please enter a proper choice between 1-? only.......");
 				break;
 			}
 		} while (ch != 0);
@@ -76,12 +76,12 @@ public class BankMain {
 	}
 
 	private static void login(Scanner scanner) {
-		System.out.println("Enter below Details to Login");
+		log.info("Enter below Details to Login");
 
-		System.out.println("Enter email:");
+		log.info("Enter email:");
 		String email = scanner.nextLine();
 
-		System.out.println("Enter password:");
+		log.info("Enter password:");
 		String password = scanner.nextLine();
 
 		try {
@@ -89,9 +89,9 @@ public class BankMain {
 			Person person = bankService.login(email, password);
 			if (person != null) {
 				currentUser = person;
-				System.out.println("------------Login result---------");
-				System.out.println("Person LOGIN Success!");
-				System.out.println(person);
+				log.info("------------Login result---------");
+				log.info("Person LOGIN Success!");
+				log.info(person);
 
 				if (person.isEmployee()) {
 					employeeMenu();
@@ -99,27 +99,27 @@ public class BankMain {
 					customerMenu();
 				}
 			} else {
-				System.out.println("Person LOGIN FAILED!");
+				log.info("Person LOGIN FAILED!");
 			}
 		} catch (BusinessException e) {
 			log.error(e);
-			System.out.println(e.getMessage());
-			System.out.println("------------RETRY WITH VALID VALUES---------");
+			log.info(e.getMessage());
+			log.info("------------RETRY WITH VALID VALUES---------");
 		}
 	}
 
 	private static void customerMenu() {
 		int ch = 0;
 		do {
-			System.out.println("------------CUSTOMER MENU---------");
-			System.out.println("1)Apply for new Bank Account");
-			System.out.println("2)View My Accounts");
-			System.out.println("3)View Account Balance");
-			System.out.println("4)Deposit");
-			System.out.println("5)Withdraw");
-			System.out.println("6)Transfer Money");
-			System.out.println("0)Back to Main Menu");
-			System.out.println("-----------------");
+			log.info("------------CUSTOMER MENU---------");
+			log.info("1)Apply for new Bank Account");
+			log.info("2)View My Accounts");
+			log.info("3)View Account Balance");
+			log.info("4)Deposit");
+			log.info("5)Withdraw");
+			log.info("6)Transfer Money");
+			log.info("0)Back to Main Menu");
+			log.info("-----------------");
 
 			try {
 				ch = Integer.parseInt(scanner.nextLine());
@@ -127,34 +127,34 @@ public class BankMain {
 			}
 			switch (ch) {
 			case 1:
-				System.out.println("1)Apply for new Bank Account");
+				log.info("1)Apply for new Bank Account");
 				applyForNewBankAccount();
 				break;
 			case 2:
-				System.out.println("....2)View My Accounts");
+				log.info("....2)View My Accounts");
 				viewMyAccounts();
 				break;
 			case 3:
-				System.out.println("....3)View Account Balance");
+				log.info("....3)View Account Balance");
 				viewAccountBalance();
 				break;
 			case 4:
-				System.out.println("....4)Deposit");
+				log.info("....4)Deposit");
 				deposit();
 				break;
 			case 5:
-				System.out.println("....5)Withdraw");
+				log.info("....5)Withdraw");
 				withdraw();
 				break;
 			case 6:
-				System.out.println("6)Transfer Money");
+				log.info("6)Transfer Money");
 				transferMoney();
 				break;
 			case 0:
-				System.out.println("....0)Back to Main Menu");
+				log.info("....0)Back to Main Menu");
 
 			default:
-				System.out.println("Invalid Choice... Please enter a proper choice.");
+				log.info("Invalid Choice... Please enter a proper choice.");
 				break;
 			}
 
@@ -162,176 +162,176 @@ public class BankMain {
 	}
 
 	private static void transferMoney() {
-		System.out.println("Enter below Details to withdraw.");
+		log.info("Enter below Details to withdraw.");
 
-		System.out.println("Enter SOURCE account number:");
+		log.info("Enter SOURCE account number:");
 		String sourceAccount = scanner.nextLine();
 		
-		System.out.println("Enter DESTINATION account number:");
+		log.info("Enter DESTINATION account number:");
 		String destAccount = scanner.nextLine();
 
-		System.out.println("Enter amount:");
+		log.info("Enter amount:");
 		double amount = 0.0;
 		try {
 			amount = Double.parseDouble(scanner.nextLine());
 		} catch (NumberFormatException ex) {
-			System.out.println("Enter valid amount for withdraw:");
-			System.out.println("---------------------");
+			log.info("Enter valid amount for withdraw:");
+			log.info("---------------------");
 			return;
 		}
 		
 		try {
 			AccountSearchService accountSearchService = new AccountSearchServiceImpl();
-			//System.out.println("Current Balance: " + account.getBalance());
+			//log.info("Current Balance: " + account.getBalance());
 			AccountService accountService = new AccountServiceImpl();
 			int c = accountService.transfer(sourceAccount, destAccount, amount);
 			//double b = account.getBalance();
 			if (c > 0) {
-				System.out.println("Transfer success.");
+				log.info("Transfer success.");
 				Account source = accountSearchService.getAccountByAccountNumber(sourceAccount);
 				Account dest = accountSearchService.getAccountByAccountNumber(destAccount);
-				System.out.println("Source Account New Balance: " + source.getBalance());
-				System.out.println("Dest Account New Balance: " + dest.getBalance());
+				log.info("Source Account New Balance: " + source.getBalance());
+				log.info("Dest Account New Balance: " + dest.getBalance());
 			}
 			else {
-				System.out.println("Transfer failed");
+				log.info("Transfer failed");
 			}
 		} catch (BusinessException e) {
 			log.error(e);
 			e.printStackTrace();
-			System.out.println("ERROR: " + e.getMessage());
+			log.info("ERROR: " + e.getMessage());
 
 		}
 
 	}
 ///////////////////////////////////////////////////////////
 	private static void withdraw() {
-		System.out.println("Enter below Details to withdraw.");
+		log.info("Enter below Details to withdraw.");
 
-		System.out.println("Enter account number:");
+		log.info("Enter account number:");
 		String accountnumber = scanner.nextLine();
 
-		System.out.println("Enter amount:");
+		log.info("Enter amount:");
 		double amount = 0.0;
 		try {
 			amount = Double.parseDouble(scanner.nextLine());
 		} catch (NumberFormatException ex) {
-			System.out.println("Enter valid amount for withdraw:");
-			System.out.println("---------------------");
+			log.info("Enter valid amount for withdraw:");
+			log.info("---------------------");
 			return;
 		}
 		try {
 			AccountSearchService accountSearchService = new AccountSearchServiceImpl();
 			Account account = accountSearchService.getAccountByAccountNumber(accountnumber);
 			if(account == null) {
-				System.out.println("....Account NOT found.");
+				log.info("....Account NOT found.");
 				return;
 			}
-			//System.out.println("Current Balance: " + account.getBalance());
+			//log.info("Current Balance: " + account.getBalance());
 			AccountService accountService = new AccountServiceImpl();
 			int c = accountService.withdraw(accountnumber, amount);
 			//double b = account.getBalance();
 			if (c > 0) {
-				System.out.println("Withdraw success.");
+				log.info("Withdraw success.");
 				Account account1 = accountSearchService.getAccountByAccountNumber(accountnumber);
-				System.out.println("New Balance: " + account1.getBalance());
+				log.info("New Balance: " + account1.getBalance());
 			} 
 			else if (account.getBalance() < amount) {
-				System.out.println( "INSUFFFIENT_BALANCE");
+				log.info( "INSUFFFIENT_BALANCE");
 			}else {
-				System.out.println("Account failed");
+				log.info("Account failed");
 			}
 		} catch (BusinessException e) {
 			log.error(e);
 			e.printStackTrace();
-			System.out.println("ERROR: " + e.getMessage());
+			log.info("ERROR: " + e.getMessage());
 
 		}
 	}
 
 	private static void deposit() {
-		System.out.println("Enter below Details to deposit.");
+		log.info("Enter below Details to deposit.");
 
-		System.out.println("Enter account number:");
+		log.info("Enter account number:");
 		String accountnumber = scanner.nextLine();
 
-		System.out.println("Enter amount:");
+		log.info("Enter amount:");
 		double amount = 0.0;
 		try {
 			amount = Double.parseDouble(scanner.nextLine());
 		} catch (NumberFormatException ex) {
-			System.out.println("Enter valid amount for deposit:");
-			System.out.println("---------------------");
+			log.info("Enter valid amount for deposit:");
+			log.info("---------------------");
 			return;
 		}
 		try {
 			AccountSearchService accountSearchService = new AccountSearchServiceImpl();
 			Account account = accountSearchService.getAccountByAccountNumber(accountnumber);
 			if(account == null) {
-				System.out.println("....Account NOT found.");
+				log.info("....Account NOT found.");
 				return;
 			}
-			System.out.println("Current Balance: " + account.getBalance());
+			log.info("Current Balance: " + account.getBalance());
 			AccountService accountService = new AccountServiceImpl();
 			int c = accountService.deposit(accountnumber, amount);
 			if (c > 0) {
-				System.out.println("Deposit success.");
+				log.info("Deposit success.");
 				Account account1 = accountSearchService.getAccountByAccountNumber(accountnumber);
-				System.out.println("New Balance: " + account1.getBalance());
+				log.info("New Balance: " + account1.getBalance());
 
 			} else {
-				System.out.println("Deposit failed.");
+				log.info("Deposit failed.");
 			}
 		} catch (BusinessException e) {
 			log.error(e);
 			e.printStackTrace();
-			System.out.println("ERROR: " + e.getMessage());
+			log.info("ERROR: " + e.getMessage());
 
 		}
 	}
 ////////
 	private static void viewAccountBalance() {
 		// TODO Auto-generated method stub
-		//System.out.println("....2)View balance");
+		//log.info("....2)View balance");
 		
-		System.out.println("Enter account number:");
+		log.info("Enter account number:");
 		String accountnumber = scanner.nextLine();
 		try {
 			AccountSearchService accountSearchService = new AccountSearchServiceImpl();
 			Account account = accountSearchService.getAccountByAccountNumber(accountnumber);
 			if(account == null) {
-				System.out.println("....Account NOT found.");
+				log.info("....Account NOT found.");
 				return;
 			}
-			System.out.println("Current Balance: " + account.getBalance());
+			log.info("Current Balance: " + account.getBalance());
 //			 {
-//				System.out.println(".");
+//				log.info(".");
 //			}
 		} catch (BusinessException e) {
 			log.error(e);
 			e.printStackTrace();
-			System.out.println("ERROR: " + e.getMessage());
+			log.info("ERROR: " + e.getMessage());
 
 		}
 	
 	}
 			
-			//System.out.println("Current Balance: " + account.getBalance());
+			//log.info("Current Balance: " + account.getBalance());
 ////	
 		
 		
 
 	private static void viewMyAccounts() {
-		System.out.println("....2)View My Accounts");
+		log.info("....2)View My Accounts");
 		try {
 			AccountSearchService accountSearchService = new AccountSearchServiceImpl();
 			List<Account> accounts = accountSearchService.getAccountByCustomerId(currentUser.getId());
 			if (accounts == null || accounts.size() == 0) {
-				System.out.println("...NO Accounts Found....");
+				log.info("...NO Accounts Found....");
 				return;
 			}
 			for (Account account : accounts) {
-				System.out.println("Account Number: " + account.getAccountnumber() 
+				log.info("Account Number: " + account.getAccountnumber() 
 						+ ", AccounType: " + account.getAccountType() 
 						+ ", Openingbalance: " + account.getOpeningbalance()
 						+ ", Balance: " + account.getBalance()
@@ -341,24 +341,24 @@ public class BankMain {
 		} catch (BusinessException e) {
 			log.error(e);
 			e.printStackTrace();
-			System.out.println(e);
+			log.info(e);
 		}
 		
 	}
 
 	private static void applyForNewBankAccount() {
-		System.out.println("Enter below Details to open new account.");
+		log.info("Enter below Details to open new account.");
 
-		System.out.println("Enter account type (SA or CA):");
+		log.info("Enter account type (SA or CA):");
 		String accountType = scanner.nextLine();
 
-		System.out.println("Enter opening deposit:");
+		log.info("Enter opening deposit:");
 		double deposit = 0.0;
 		try {
 			deposit = Double.parseDouble(scanner.nextLine());
 		} catch (NumberFormatException ex) {
-			System.out.println("Enter valid amount for deposit:");
-			System.out.println("---------------------");
+			log.info("Enter valid amount for deposit:");
+			log.info("---------------------");
 			return;
 		}
 
@@ -371,16 +371,16 @@ public class BankMain {
 
 			int c = bankService.applyForNewAccount(account);
 
-			System.out.println("------------Result---------");
+			log.info("------------Result---------");
 			if (c != 0) {
-				System.out.println("Account applied Successfully!");
+				log.info("Account applied Successfully!");
 			} else {
-				System.out.println("Account application FAILED!");
+				log.info("Account application FAILED!");
 			}
 		} catch (BusinessException e) {
 			log.error(e);
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+			log.info(e.getMessage());
 		}
 
 	}
@@ -388,12 +388,12 @@ public class BankMain {
 	private static void employeeMenu() {
 		int ch = 0;
 		do {
-			System.out.println("\n------------EMPLOYEE MENU---------");
-			System.out.println("1)Approve or reject Accounts");
-			System.out.println("2)View customer's bank accounts");
+			log.info("\n------------EMPLOYEE MENU---------");
+			log.info("1)Approve or reject Accounts");
+			log.info("2)View customer's bank accounts");
 
-			System.out.println("0)Back to Main Menu");
-			System.out.println("-----------------");
+			log.info("0)Back to Main Menu");
+			log.info("-----------------");
 			try {
 				ch = Integer.parseInt(scanner.nextLine());
 			} catch (NumberFormatException e) {
@@ -407,71 +407,71 @@ public class BankMain {
 				break;
 
 			case 0:
-				System.out.println("....0)Back to Main Menu");
+				log.info("....0)Back to Main Menu");
 
 			default:
-				System.out.println("Invalid Choice... Please enter a proper choice.");
+				log.info("Invalid Choice... Please enter a proper choice.");
 				break;
 			}
 		} while (ch != 0);
 	}
 
 	private static void approveOrRejectAccount() {
-		System.out.println("....1)Approve or reject Accounts");
+		log.info("....1)Approve or reject Accounts");
 		BankService bankService = new BankServiceImpl();
 		try {
 			List<Account> appliedNewAccounts = bankService.getAppliedNewAccounts();
 			if (appliedNewAccounts == null || appliedNewAccounts.size() == 0) {
-				System.out.println("...NO Accounts pending for Approval....");
+				log.info("...NO Accounts pending for Approval....");
 				return;
 			}
 			for (Account account : appliedNewAccounts) {
 
-				System.out.println("NEW Account Request: Customer Id: " + account.getCustomerid() + ", AccounType: "
+				log.info("NEW Account Request: Customer Id: " + account.getCustomerid() + ", AccounType: "
 						+ account.getAccountType() + ", Openingbalance: " + account.getOpeningbalance());
-				System.out.println("Enter Approve or Reject");
+				log.info("Enter Approve or Reject");
 				String status = scanner.nextLine();
 				if (status.equalsIgnoreCase("Approve")) {
-					System.out.println("Enter Account Number");
+					log.info("Enter Account Number");
 					String accountNumber = scanner.nextLine();
 					int c = bankService.approveAccount(account.getId(), accountNumber);
 					if (c > 0) {
-						System.out.println("...Account Approved....");
+						log.info("...Account Approved....");
 					} else {
-						System.out.println("Account Approval FAILED.");
+						log.info("Account Approval FAILED.");
 					}
 				} else if (status.equalsIgnoreCase("Reject")) {
 					int c = bankService.rejectAccount(account.getId());
 					if (c > 0) {
-						System.out.println("...Account REJECTED....");
+						log.info("...Account REJECTED....");
 					} else {
-						System.out.println("Account REJECTION FAILED.");
+						log.info("Account REJECTION FAILED.");
 					}
 				} else {
-					System.out.println("...Account Status NOT Changed....");
+					log.info("...Account Status NOT Changed....");
 
 				}
 			}
 		} catch (BusinessException e) {
 			log.error(e);
 			e.printStackTrace();
-			System.out.println("...ERROR: " + e.getMessage());
+			log.info("...ERROR: " + e.getMessage());
 		}
 	}
 
 	private static void signup(Scanner scanner) {
 		Person person = new Person();
 
-		System.out.println("Enter below Details to Create user Account");
+		log.info("Enter below Details to Create user Account");
 
 		try {
-			System.out.println("Enter email:");
+			log.info("Enter email:");
 			String email = scanner.nextLine();
 
 			PersonSearchService personSearchService = new PersonSearchServiceImpl();
 			Person personByEmail = personSearchService.getPersonByEmail(email);
 			if(personByEmail != null) {
-				System.out.println("...Customer EXISTS for email: " + email +
+				log.info("...Customer EXISTS for email: " + email +
 						"\n Try with a different email id.");
 				return;
 			}
@@ -479,58 +479,58 @@ public class BankMain {
 				person.setEmail(email);
 			}
 			
-			System.out.println("Enter password:");
+			log.info("Enter password:");
 			person.setPassword(scanner.nextLine());
 
-			System.out.println("Enter DoB:");
+			log.info("Enter DoB:");
 			person.setDob(scanner.nextLine());
 
-			System.out.println("Enter First Name:");
+			log.info("Enter First Name:");
 			person.setFirstname(scanner.nextLine());
 
-			System.out.println("Enter Last Name:");
+			log.info("Enter Last Name:");
 			person.setLastname(scanner.nextLine());
 
-			System.out.println("Enter phonenumber:");
+			log.info("Enter phonenumber:");
 			person.setPhonenumber(scanner.nextLine());
 
-			System.out.println("Enter Is Employee:");
+			log.info("Enter Is Employee:");
 			person.setEmployee(Boolean.valueOf(scanner.nextLine()));
 
 			PersonCRUDService personCrudService = new PersonCRUDServiceImpl();
 			if (personCrudService.createPerson(person) == 1) {
-				System.out.println("Person Registered Successfully with below details");
-				System.out.println(person);
+				log.info("Person Registered Successfully with below details");
+				log.info(person);
 			}
 		} catch (BusinessException e) {
 			log.error(e);
 			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println("------------RETRY WITH VALID VALUES---------");
+			log.info(e.getMessage());
+			log.info("------------RETRY WITH VALID VALUES---------");
 		}
 	}
 
 	private static void viewCustomerAccounts() {
-		System.out.println("....2)View customer's bank accounts");
+		log.info("....2)View customer's bank accounts");
 		PersonSearchService personSearchService = new PersonSearchServiceImpl();
 		AccountSearchService accountSearchService = new AccountSearchServiceImpl();
 
 		try {
-			System.out.println("Enter Customer Email:");
+			log.info("Enter Customer Email:");
 			String email = scanner.nextLine();
 
 			Person person = personSearchService.getPersonByEmail(email);
 
 			if (person == null) {
-				System.out.println("...No customer found for email: " + email);
+				log.info("...No customer found for email: " + email);
 				return;
 			} else {
-				System.out.println("...Customer found for email: " + person);
+				log.info("...Customer found for email: " + person);
 			}
 			List<Account> accounts = accountSearchService.getAccountByCustomerId(person.getId());
 			for (Account account : accounts) {
 
-				System.out.println("Account of Customer Id: " + account.getCustomerid() + ", Accountnumber: "
+				log.info("Account of Customer Id: " + account.getCustomerid() + ", Accountnumber: "
 						+ account.getAccountnumber() + ", AccounType: " + account.getAccountType()
 						+ ", Openingbalance: " + account.getOpeningbalance() + ", Balance: " + account.getBalance()
 						+ ", Status: " + account.getStatus());
