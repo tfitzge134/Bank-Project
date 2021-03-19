@@ -8,12 +8,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.bank.dao.AccountDAO;
 import com.bank.dao.dbutil.PostgresConnection;
 import com.bank.exception.BusinessException;
 import com.bank.model.Account;
+import com.bank.service.impl.PersonSearchServiceImpl;
 
 public class AccountDAOImpl implements AccountDAO {
+	private static Logger log = Logger.getLogger(AccountDAOImpl.class);
 
 	@Override
 	public int addAccount(Account account) throws BusinessException {
@@ -35,13 +39,10 @@ public class AccountDAOImpl implements AccountDAO {
 
 			int count = preparedStatement.executeUpdate();
 			return count;
-		} catch (SQLException ex) {
+		} catch (Exception ex) {
+			log.error(ex);
 			ex.printStackTrace();
 			throw new BusinessException("Internal error");
-		} catch (ClassNotFoundException e) {
-			System.out.println(e);
-			e.printStackTrace();
-			return 0;
 		}
 
 	}
@@ -53,7 +54,7 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public int addDeposit(String accountNumber, double newDeposit) {
+	public int addDeposit(String accountNumber, double newDeposit) throws BusinessException {
 
 		try (Connection connection = PostgresConnection.openConnection()) {
 			String sql = "update bank.account set balance = (balance + ?) where accountnumber = ?";
@@ -65,14 +66,14 @@ public class AccountDAOImpl implements AccountDAO {
 			int count = preparedStatement.executeUpdate();
 			return count;
 		} catch (Exception ex) {
+			log.error(ex);
 			ex.printStackTrace();
-			System.out.println(ex);
-			return 0;
+			throw new BusinessException("Internal error");
 		}
 	}
 
 	@Override
-	public int withdraw(String accountNumber, double amount) {
+	public int withdraw(String accountNumber, double amount) throws BusinessException {
 		try (Connection connection = PostgresConnection.openConnection()) {
 			String sql = "update bank.account set balance = (balance - ?) where accountnumber = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -83,12 +84,10 @@ public class AccountDAOImpl implements AccountDAO {
 			int count = preparedStatement.executeUpdate();
 			return count;
 		} catch (Exception ex) {
+			log.error(ex);
 			ex.printStackTrace();
-			System.out.println(ex);
-			return 0;
+			throw new BusinessException("Internal error");
 		}		
-		
-				
 		
 	}
 
@@ -128,7 +127,8 @@ public class AccountDAOImpl implements AccountDAO {
 			}
 			return list;
 		} catch (Exception e) {
-			System.out.println(e);
+			log.error(e);
+			e.printStackTrace();
 			throw new BusinessException("Internal error");
 		}
 	}
@@ -147,8 +147,8 @@ public class AccountDAOImpl implements AccountDAO {
 			int count = preparedStatement.executeUpdate();
 			return count;
 		} catch (SQLException | ClassNotFoundException e) {
+			log.error(e);
 			e.printStackTrace();
-			System.out.println(e);
 			throw new BusinessException("Internal error");
 		}
 
@@ -165,8 +165,8 @@ public class AccountDAOImpl implements AccountDAO {
 			int count = preparedStatement.executeUpdate();
 			return count;
 		} catch (SQLException | ClassNotFoundException e) {
+			log.error(e);
 			e.printStackTrace();
-			System.out.println(e);
 			throw new BusinessException("Internal error");
 		}
 	}

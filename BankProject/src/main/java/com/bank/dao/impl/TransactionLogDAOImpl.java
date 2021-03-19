@@ -5,12 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.bank.dao.TransactionLogDAO;
 import com.bank.dao.dbutil.PostgresConnection;
 import com.bank.exception.BusinessException;
 import com.bank.model.TransactionLog;
 
 public class TransactionLogDAOImpl implements TransactionLogDAO {
+	private static Logger log = Logger.getLogger(TransactionLogDAOImpl.class);
 
 	@Override
 	public int addTransactionLog(TransactionLog txnLog) throws BusinessException {
@@ -28,8 +31,9 @@ public class TransactionLogDAOImpl implements TransactionLogDAO {
 
 			int count = preparedStatement.executeUpdate();
 			return count;
-		} catch (SQLException | ClassNotFoundException ex) {
-			ex.printStackTrace();
+		} catch (SQLException | ClassNotFoundException e) {
+			log.error(e);
+			e.printStackTrace();
 			throw new BusinessException("Internal error");
 		}
 

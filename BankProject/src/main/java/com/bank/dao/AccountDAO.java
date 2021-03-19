@@ -17,10 +17,10 @@ public interface AccountDAO {
 	public double viewBalancebyAccNumber(String accountNumber);
 
 	// as a customer I can make a deposit
-	public int addDeposit(String accountNumber, double newDeposit);
+	public int addDeposit(String accountNumber, double newDeposit) throws BusinessException;
 
 	// as a customer I can make a withdrawl
-	public int withdraw(String accountNumber, double amount);
+	public int withdraw(String accountNumber, double amount) throws BusinessException;
 
 	// employee can active account
 	public int updateAccount(String accountNumber, String isactive);

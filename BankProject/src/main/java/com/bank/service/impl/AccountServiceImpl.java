@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 import com.bank.dao.AccountDAO;
 import com.bank.dao.dbutil.PostgresConnection;
 import com.bank.dao.impl.AccountDAOImpl;
@@ -16,7 +18,8 @@ import com.bank.service.TransactionLogCRUDService;
 import com.bank.service.TransactionTypes;
 
 public class AccountServiceImpl implements AccountService {
-
+	private static Logger log = Logger.getLogger(AccountServiceImpl.class);
+	
 	@Override
 	public int deposit(String accountnumber, double amount) throws BusinessException {
 
@@ -34,6 +37,7 @@ public class AccountServiceImpl implements AccountService {
 				txnLogCRUDService.createTransactionLog(txnLog);
 			} catch (BusinessException e) {
 				e.printStackTrace();
+				log.error(e);
 				System.out.println("Creating TransactionLog FAILED.");
 			}
 			return 1;
@@ -43,7 +47,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public int withdraw(String accountnumber, double amount) {
+	public int withdraw(String accountnumber, double amount) throws BusinessException {
 		AccountDAO accountDAO = new AccountDAOImpl();
 		int c = accountDAO.withdraw(accountnumber, amount);
 		if(c == 1) {
@@ -57,6 +61,7 @@ public class AccountServiceImpl implements AccountService {
 			try {
 				txnLogCRUDService.createTransactionLog(txnLog);
 			} catch (BusinessException e) {
+				log.error(e);
 				e.printStackTrace();
 				System.out.println("Creating TransactionLog FAILED.");
 			}
@@ -126,21 +131,21 @@ public class AccountServiceImpl implements AccountService {
 			try {
 				txnLogCRUDService.createTransactionLog(txnLog);
 			} catch (BusinessException e) {
+				log.error(e);
 				e.printStackTrace();
 				System.out.println("Creating TransactionLog FAILED.");
 			}
 			return 1;
 		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
 			// roll back the transaction
 			try {
 				if (connection != null) {
 					connection.rollback();
 				}
 			} catch (SQLException e1) {
-				e1.printStackTrace();
 			}
-			e.printStackTrace();
-			System.out.println(e);
 			throw new BusinessException("Internal error");
 		} finally {
 			if (connection != null) {

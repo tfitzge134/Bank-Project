@@ -6,11 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 import com.bank.dao.dbutil.PostgresConnection;
 import com.bank.exception.BusinessException;
 import com.bank.model.Person;
 
 public class PersonDAOImpl implements com.bank.dao.PersonDAO {
+	private static Logger log = Logger.getLogger(PersonDAOImpl.class);
 
 	public int addPerson(Person person) throws BusinessException {
 		try (Connection connection = PostgresConnection.openConnection()) {
@@ -29,21 +32,11 @@ public class PersonDAOImpl implements com.bank.dao.PersonDAO {
 			preparedStatement.setBoolean(7, person.isEmployee());
 			int count = preparedStatement.executeUpdate();
 			return count;
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			new BusinessException(ex.getMessage());
-//			String message = ex.getMessage();
-//			if (message.contains("ERROR: duplicate key")) {
-//				System.out.println("The Primary KEY (Person Id) already exists: " + person.getId());
-//			} else {
-//				System.out.println(ex);
-//			}
-//			return 0;
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
+			log.error(e);
 			e.printStackTrace();
 			throw new BusinessException("Internal error");
 		}
-		return 0;
 	}
 
 	@Override
@@ -84,7 +77,8 @@ public class PersonDAOImpl implements com.bank.dao.PersonDAO {
 			}
 			return null;
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println(e);
+			log.error(e);
+			e.printStackTrace();
 			throw new BusinessException("Internal error");
 		}
 	}

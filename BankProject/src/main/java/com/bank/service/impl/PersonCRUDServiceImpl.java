@@ -2,6 +2,8 @@ package com.bank.service.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.bank.dao.PersonDAO;
 import com.bank.dao.impl.PersonDAOImpl;
 import com.bank.exception.BusinessException;
@@ -9,7 +11,8 @@ import com.bank.model.Person;
 import com.bank.service.PersonCRUDService;
 
 public class PersonCRUDServiceImpl implements PersonCRUDService {
-
+	//private static Logger log = Logger.getLogger(PersonCRUDServiceImpl.class);
+	
 	private PersonDAO personDAO = new PersonDAOImpl();
 
 	@Override

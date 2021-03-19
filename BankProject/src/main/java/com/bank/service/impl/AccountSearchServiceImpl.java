@@ -7,13 +7,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.bank.dao.dbutil.PostgresConnection;
 import com.bank.exception.BusinessException;
+import com.bank.main.BankMain;
 import com.bank.model.Account;
 import com.bank.service.AccountSearchService;
 
 public class AccountSearchServiceImpl implements AccountSearchService {
-
+	private static Logger log = Logger.getLogger(AccountSearchServiceImpl.class);
+	
 	@Override
 	public Account getAccountById(int id) throws BusinessException {
 		try (Connection connection = PostgresConnection.openConnection()) {
@@ -33,7 +37,8 @@ public class AccountSearchServiceImpl implements AccountSearchService {
 			}
 			return null;
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println(e);
+			e.printStackTrace();
+			log.error(e);
 			throw new BusinessException("Internal error");
 		}
 	}
@@ -55,7 +60,8 @@ public class AccountSearchServiceImpl implements AccountSearchService {
 			}
 			return null;
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println(e);
+			log.error(e);
+			e.printStackTrace();
 			throw new BusinessException("Internal error");
 		}
 	}
@@ -81,7 +87,8 @@ public class AccountSearchServiceImpl implements AccountSearchService {
 			}
 			return accounts;
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println(e);
+			log.error(e);
+			e.printStackTrace();
 			throw new BusinessException("Internal error");
 		}
 	}

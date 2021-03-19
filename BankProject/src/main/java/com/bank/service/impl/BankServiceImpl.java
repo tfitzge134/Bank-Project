@@ -2,6 +2,8 @@ package com.bank.service.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.bank.dao.AccountDAO;
 import com.bank.dao.PersonDAO;
 import com.bank.dao.impl.AccountDAOImpl;
@@ -12,7 +14,7 @@ import com.bank.model.Person;
 import com.bank.service.BankService;
 
 public class BankServiceImpl implements BankService {
-
+	//private static Logger log = Logger.getLogger(BankServiceImpl.class);
 	@Override
 	public Person login(String email, String password) throws BusinessException {
 		if (!PersonValidations.isValidEmail(email)) {

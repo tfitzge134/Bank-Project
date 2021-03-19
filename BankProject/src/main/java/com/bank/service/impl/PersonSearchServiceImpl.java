@@ -5,12 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 import com.bank.dao.dbutil.PostgresConnection;
 import com.bank.exception.BusinessException;
 import com.bank.model.Person;
 import com.bank.service.PersonSearchService;
 
 public class PersonSearchServiceImpl implements PersonSearchService {
+	private static Logger log = Logger.getLogger(PersonSearchServiceImpl.class);
 
 	@Override
 	public Person getPersonById(int id) throws BusinessException {
@@ -37,6 +40,7 @@ public class PersonSearchServiceImpl implements PersonSearchService {
 			}
 			return null;
 		} catch (ClassNotFoundException | SQLException e) {
+			log.error(e);
 			System.out.println(e);
 			throw new BusinessException("Internal error");
 		}
