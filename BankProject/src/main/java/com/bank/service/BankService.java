@@ -7,7 +7,11 @@ import com.bank.model.Account;
 import com.bank.model.Person;
 
 public interface BankService {
+	
 	public Person login(String email, String password) throws BusinessException;
+
+	// * As a customer, I can apply for a new bank account with a starting balance.
+	public int applyForNewAccount(Account account) throws BusinessException;
 
 	public int approveAccount(int id, String accountNumber) throws BusinessException;
 

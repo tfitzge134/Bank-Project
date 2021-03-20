@@ -15,7 +15,7 @@ class PersonCRUDServiceTest {
 
 
 	@Test
-	void test() {
+	void testCreatePerson() {
 
 		Person person = new Person();
 		String firstname = "Bill";

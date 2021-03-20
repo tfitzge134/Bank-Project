@@ -13,6 +13,16 @@ import com.bank.service.BankService;
 
 public class BankServiceImpl implements BankService {
 	//private static Logger log = Logger.getLogger(BankServiceImpl.class);
+	
+	@Override
+	public int applyForNewAccount(Account account) throws BusinessException {
+		if (!AccountValidations.isValidAccountType(account.getAccountType())) {
+			throw new BusinessException("Entered accountType " + account.getAccountType() + " is invalid.");
+		}
+		AccountDAO accountDAO = new AccountDAOImpl();
+		return accountDAO.addAccount(account);
+	}
+	
 	@Override
 	public Person login(String email, String password) throws BusinessException {
 		if (!PersonValidations.isValidEmail(email)) {

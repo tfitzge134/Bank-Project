@@ -7,13 +7,11 @@ import org.apache.log4j.Logger;
 import com.bank.exception.BusinessException;
 import com.bank.model.Account;
 import com.bank.model.Person;
-import com.bank.service.AccountCRUDService;
 import com.bank.service.AccountSearchService;
 import com.bank.service.AccountService;
 import com.bank.service.BankService;
 import com.bank.service.PersonCRUDService;
 import com.bank.service.PersonSearchService;
-import com.bank.service.impl.AccountCRUDServiceImpl;
 import com.bank.service.impl.AccountSearchServiceImpl;
 import com.bank.service.impl.AccountServiceImpl;
 import com.bank.service.impl.BankServiceImpl;
@@ -362,13 +360,13 @@ public class BankMain {
 		}
 
 		try {
-			AccountCRUDService accountCRUDService = new AccountCRUDServiceImpl();
+			BankService bankService = new BankServiceImpl();
 			Account account = new Account();
 			account.setAccountType(accountType);
 			account.setCustomerid(currentUser.getId());
 			account.setOpeningbalance(deposit);
 
-			int c = accountCRUDService.createAccount(account);
+			int c = bankService.applyForNewAccount(account);
 
 			log.info("------------Result---------");
 			if (c != 0) {

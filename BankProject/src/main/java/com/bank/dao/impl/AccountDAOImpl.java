@@ -24,7 +24,7 @@ public class AccountDAOImpl implements AccountDAO {
 			String sql = "insert into bank.account (accountType, accountnumber "
 					+ ", openingbalance , "
 					+ "opendingdate , isactive"
-					+ ", customerid ) \n"
+					+ ", customerid ) "
 					+ "   values (?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, account.getAccountType());
@@ -139,6 +139,22 @@ public class AccountDAOImpl implements AccountDAO {
 			int count = preparedStatement.executeUpdate();
 			return count;
 		} catch (SQLException | ClassNotFoundException e) {
+			log.error(e);
+			e.printStackTrace();
+			throw new BusinessException("Internal error");
+		}
+	}
+	
+	@Override
+	public int deleteById(int id) throws BusinessException {
+		try (Connection connection = PostgresConnection.openConnection()) {
+			String sql = "DELETE FROM bank.account "
+					+ "WHERE id = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+			int count = preparedStatement.executeUpdate();
+			return count;
+		} catch (Exception e) {
 			log.error(e);
 			e.printStackTrace();
 			throw new BusinessException("Internal error");

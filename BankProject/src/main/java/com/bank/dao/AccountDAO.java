@@ -23,4 +23,6 @@ public interface AccountDAO {
 
 	public int rejectAccount(int id) throws BusinessException;
 
+	public int deleteById(int id) throws BusinessException;
+
 }

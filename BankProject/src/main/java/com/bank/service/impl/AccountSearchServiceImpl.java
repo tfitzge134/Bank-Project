@@ -27,10 +27,14 @@ public class AccountSearchServiceImpl implements AccountSearchService {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				Account account = new Account();
+				
+				account.setId(resultSet.getInt("id"));
 				account.setAccountType(resultSet.getString("accountType"));
 				account.setAccountnumber(resultSet.getString("accountnumber"));
+				account.setStatus(resultSet.getString("status"));
 				account.setBalance(resultSet.getDouble("balance"));
 				account.setIsactive(resultSet.getBoolean("isactive"));
+				
 				return account;
 			}
 			return null;
