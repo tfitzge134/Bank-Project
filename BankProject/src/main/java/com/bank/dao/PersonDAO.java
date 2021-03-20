@@ -9,4 +9,6 @@ public interface PersonDAO {
 
 	public Person verifyPassword(String email, String password) throws BusinessException;
 
+	public int deletePersonByEmail(String email) throws BusinessException;
+
 }

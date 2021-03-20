@@ -65,4 +65,20 @@ public class PersonDAOImpl implements com.bank.dao.PersonDAO {
 		}
 	}
 
+	@Override
+	public int deletePersonByEmail(String email) throws BusinessException {
+		try (Connection connection = PostgresConnection.openConnection()) {
+			String sql = "DELETE FROM bank.person "
+					+ "WHERE email = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, email);
+			int count = preparedStatement.executeUpdate();
+			return count;
+		} catch (Exception e) {
+			log.error(e);
+			e.printStackTrace();
+			throw new BusinessException("Internal error");
+		}
+	}
+
 }

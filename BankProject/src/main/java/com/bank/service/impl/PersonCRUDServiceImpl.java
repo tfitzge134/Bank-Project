@@ -7,8 +7,8 @@ import com.bank.model.Person;
 import com.bank.service.PersonCRUDService;
 
 public class PersonCRUDServiceImpl implements PersonCRUDService {
-	//private static Logger log = Logger.getLogger(PersonCRUDServiceImpl.class);
-	
+	// private static Logger log = Logger.getLogger(PersonCRUDServiceImpl.class);
+
 	private PersonDAO personDAO = new PersonDAOImpl();
 
 	@Override
@@ -29,6 +29,11 @@ public class PersonCRUDServiceImpl implements PersonCRUDService {
 		return personDAO.addPerson(person);
 	}
 
-	
+	@Override
+	public int deletePersonByEmail(String email) throws BusinessException {
+		// do the handshake with DAO
+		return personDAO.deletePersonByEmail(email);
+
+	}
 
 }

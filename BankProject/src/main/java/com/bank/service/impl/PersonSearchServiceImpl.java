@@ -30,6 +30,8 @@ public class PersonSearchServiceImpl implements PersonSearchService {
 				person.setLastname(resultSet.getString("lastname"));
 				person.setEmail(resultSet.getString("email"));
 				person.setEmployee(resultSet.getBoolean("isEmployee"));
+				person.setDob(resultSet.getString("dob"));
+				person.setPhonenumber(resultSet.getString("phonenumber"));
 				return person;
 			}
 			return null;

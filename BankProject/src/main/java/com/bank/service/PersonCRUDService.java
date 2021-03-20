@@ -6,5 +6,7 @@ import com.bank.model.Person;
 public interface PersonCRUDService {
 
 	public int createPerson(Person person)throws BusinessException;
+
+	public int deletePersonByEmail(String email)throws BusinessException;
 	
 }
