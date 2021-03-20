@@ -40,24 +40,6 @@ public class PersonDAOImpl implements com.bank.dao.PersonDAO {
 	}
 
 	@Override
-	public boolean isExisting(String email) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Person getPerson(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int logout(String email) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public Person verifyPassword(String email, String password) throws BusinessException {
 		try (Connection connection = PostgresConnection.openConnection()) {
 			String sql = "SELECT * FROM bank.person WHERE email = ? AND password = ?";

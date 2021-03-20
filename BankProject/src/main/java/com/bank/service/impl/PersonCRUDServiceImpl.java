@@ -1,9 +1,5 @@
 package com.bank.service.impl;
 
-import java.util.List;
-
-import org.apache.log4j.Logger;
-
 import com.bank.dao.PersonDAO;
 import com.bank.dao.impl.PersonDAOImpl;
 import com.bank.exception.BusinessException;
@@ -33,22 +29,6 @@ public class PersonCRUDServiceImpl implements PersonCRUDService {
 		return personDAO.addPerson(person);
 	}
 
-	@Override
-	public int updatePerson(int id, String email) throws BusinessException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deletePerson(int id) throws BusinessException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<Person> getAllPersons() throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }

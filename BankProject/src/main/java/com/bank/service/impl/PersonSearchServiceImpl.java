@@ -16,12 +16,6 @@ public class PersonSearchServiceImpl implements PersonSearchService {
 	private static Logger log = Logger.getLogger(PersonSearchServiceImpl.class);
 
 	@Override
-	public Person getPersonById(int id) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Person getPersonByEmail(String email) throws BusinessException {
 		try (Connection connection = PostgresConnection.openConnection()) {
 			String sql = "SELECT * FROM bank.person WHERE email = ?";

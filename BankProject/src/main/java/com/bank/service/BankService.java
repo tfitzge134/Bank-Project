@@ -9,10 +9,6 @@ import com.bank.model.Person;
 public interface BankService {
 	public Person login(String email, String password) throws BusinessException;
 
-	public int addAccount(Account account) throws BusinessException;
-	
-	public int applyForNewAccount(Account account) throws BusinessException;
-
 	public int approveAccount(int id, String accountNumber) throws BusinessException;
 
 	public int rejectAccount(int id) throws BusinessException;

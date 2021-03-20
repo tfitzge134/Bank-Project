@@ -1,20 +1,19 @@
 package com.bank.main;
-
 import java.util.List;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
-import com.bank.dao.AccountDAO;
-import com.bank.dao.impl.AccountDAOImpl;
 import com.bank.exception.BusinessException;
 import com.bank.model.Account;
 import com.bank.model.Person;
+import com.bank.service.AccountCRUDService;
 import com.bank.service.AccountSearchService;
 import com.bank.service.AccountService;
 import com.bank.service.BankService;
 import com.bank.service.PersonCRUDService;
 import com.bank.service.PersonSearchService;
+import com.bank.service.impl.AccountCRUDServiceImpl;
 import com.bank.service.impl.AccountSearchServiceImpl;
 import com.bank.service.impl.AccountServiceImpl;
 import com.bank.service.impl.BankServiceImpl;
@@ -160,7 +159,7 @@ public class BankMain {
 
 		} while (ch != 0);
 	}
-
+	
 	private static void transferMoney() {
 		log.info("Enter below Details to withdraw.");
 
@@ -363,13 +362,13 @@ public class BankMain {
 		}
 
 		try {
-			BankService bankService = new BankServiceImpl();
+			AccountCRUDService accountCRUDService = new AccountCRUDServiceImpl();
 			Account account = new Account();
 			account.setAccountType(accountType);
 			account.setCustomerid(currentUser.getId());
 			account.setOpeningbalance(deposit);
 
-			int c = bankService.applyForNewAccount(account);
+			int c = accountCRUDService.createAccount(account);
 
 			log.info("------------Result---------");
 			if (c != 0) {

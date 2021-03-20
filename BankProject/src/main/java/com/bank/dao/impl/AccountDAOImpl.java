@@ -1,7 +1,6 @@
 package com.bank.dao.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +13,6 @@ import com.bank.dao.AccountDAO;
 import com.bank.dao.dbutil.PostgresConnection;
 import com.bank.exception.BusinessException;
 import com.bank.model.Account;
-import com.bank.service.impl.PersonSearchServiceImpl;
 
 public class AccountDAOImpl implements AccountDAO {
 	private static Logger log = Logger.getLogger(AccountDAOImpl.class);
@@ -45,12 +43,6 @@ public class AccountDAOImpl implements AccountDAO {
 			throw new BusinessException("Internal error");
 		}
 
-	}
-
-	@Override
-	public double viewBalancebyAccNumber(String accountNumber) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -89,24 +81,6 @@ public class AccountDAOImpl implements AccountDAO {
 			throw new BusinessException("Internal error");
 		}		
 		
-	}
-
-	@Override
-	public int updateAccount(String accountNumber, String isactive) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<Account> getAllAccounts() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int applyForAccount(int customerid, String accountType, double deposit, Date appliedDate) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -170,4 +144,5 @@ public class AccountDAOImpl implements AccountDAO {
 			throw new BusinessException("Internal error");
 		}
 	}
+
 }

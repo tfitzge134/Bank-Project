@@ -9,7 +9,7 @@ import com.bank.model.Account;
 import com.bank.service.AccountSearchService;
 import com.bank.service.impl.AccountSearchServiceImpl;
 
-public class AccountMain {
+public class AccountMain_unused {
 
 	public static void main(String[] args) {
 		// createAccount();

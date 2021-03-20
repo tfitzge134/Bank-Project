@@ -3,7 +3,6 @@ package com.bank.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -37,12 +36,6 @@ public class TransactionLogDAOImpl implements TransactionLogDAO {
 			throw new BusinessException("Internal error");
 		}
 
-	}
-
-	@Override
-	public List<TransactionLog> getAllTransactionLogs() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

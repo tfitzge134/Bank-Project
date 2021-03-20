@@ -1,5 +1,6 @@
 package com.bank.dao;
 
+
 import com.bank.model.Address;
 
 public interface AddressDAO {

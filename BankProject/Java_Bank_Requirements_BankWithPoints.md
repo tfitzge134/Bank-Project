@@ -27,6 +27,7 @@ Total Points: 23 points
 * As a customer, I can apply for a new bank account with a starting balance.
 	* 3 points
 	//search account by accnumber
+	--PENDING
 * As a customer, I can view the balance of a specific account.
 	* 1 point
 	//withdrawl services
