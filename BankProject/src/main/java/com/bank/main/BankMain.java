@@ -39,7 +39,7 @@ public class BankMain {
 			log.info("1)Login");
 			log.info("2)Signup for User Account");
 
-			log.info("0)Logout");
+			log.info("0)Exit");
 
 			log.info("Please enter an appropriate Search Option(1-8)");
 			try {
@@ -61,7 +61,7 @@ public class BankMain {
 
 				break;
 			case 0:
-				log.info("Thankq for using the Bank APP V1.0.....");
+				log.info("Thank You for using the Bank APP V1.0.....");
 				break;
 
 			default:
@@ -195,7 +195,7 @@ public class BankMain {
 			}
 		} catch (BusinessException e) {
 			log.error(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 			log.info("ERROR: " + e.getMessage());
 
 		}
@@ -225,22 +225,24 @@ public class BankMain {
 				return;
 			}
 			//log.info("Current Balance: " + account.getBalance());
+			if (account.getBalance() < amount) {
+				log.info( "INSUFFFIENT_BALANCE");
+				return;
+				
+			}
 			AccountService accountService = new AccountServiceImpl();
 			int c = accountService.withdraw(accountnumber, amount);
-			//double b = account.getBalance();
 			if (c > 0) {
-				log.info("Withdraw success.");
+				log.info("Withdrawal success.");
 				Account account1 = accountSearchService.getAccountByAccountNumber(accountnumber);
 				log.info("New Balance: " + account1.getBalance());
 			} 
-			else if (account.getBalance() < amount) {
-				log.info( "INSUFFFIENT_BALANCE");
-			}else {
-				log.info("Account failed");
+			else {
+				log.info("Withdrawal failed");
 			}
 		} catch (BusinessException e) {
 			log.error(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 			log.info("ERROR: " + e.getMessage());
 
 		}
@@ -281,7 +283,7 @@ public class BankMain {
 			}
 		} catch (BusinessException e) {
 			log.error(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 			log.info("ERROR: " + e.getMessage());
 
 		}
@@ -306,7 +308,7 @@ public class BankMain {
 //			}
 		} catch (BusinessException e) {
 			log.error(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 			log.info("ERROR: " + e.getMessage());
 
 		}
@@ -337,7 +339,7 @@ public class BankMain {
 			}
 		} catch (BusinessException e) {
 			log.error(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 			log.info(e);
 		}
 		
@@ -376,7 +378,7 @@ public class BankMain {
 			}
 		} catch (BusinessException e) {
 			log.error(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 			log.info(e.getMessage());
 		}
 
@@ -451,7 +453,7 @@ public class BankMain {
 			}
 		} catch (BusinessException e) {
 			log.error(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 			log.info("...ERROR: " + e.getMessage());
 		}
 	}
@@ -479,7 +481,7 @@ public class BankMain {
 			log.info("Enter password:");
 			person.setPassword(scanner.nextLine());
 
-			log.info("Enter DoB:");
+			log.info("Enter DoB in the format yyyy-mm-dd");
 			person.setDob(scanner.nextLine());
 
 			log.info("Enter First Name:");
@@ -501,7 +503,7 @@ public class BankMain {
 			}
 		} catch (BusinessException e) {
 			log.error(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 			log.info(e.getMessage());
 			log.info("------------RETRY WITH VALID VALUES---------");
 		}
@@ -534,7 +536,7 @@ public class BankMain {
 			}
 		} catch (BusinessException e) {
 			log.error(e);
-			e.printStackTrace();
+			//e.printStackTrace();
 			
 		}
 	}

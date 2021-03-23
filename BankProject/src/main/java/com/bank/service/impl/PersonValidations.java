@@ -41,5 +41,24 @@ public class PersonValidations {
 			return false;
 		}
 	}
+	
+	public static boolean isValidDob(String dob) {
+		//Pattern: yyyy-mm-dd
+		if (dob != null && !dob.isEmpty()) {
+			if ((dob.length() == 10) && (dob.charAt(4) == '-') && (dob.charAt(7) == '-')) {
+				for(int i =0; i <10; i++) {
+					if((i == 4) || i == 7) {
+						continue;
+					}
+					char c = dob.charAt(i);
+					if(!Character.isDigit(c)) {
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

@@ -13,6 +13,10 @@ public class PersonCRUDServiceImpl implements PersonCRUDService {
 
 	@Override
 	public int createPerson(Person person) throws BusinessException {
+		if (!PersonValidations.isValidDob(person.getDob())) {
+			throw new BusinessException("Entered person DOB " + person.getDob() 
+			+ " is invalid.\n Valid Format: yyyy-MM-dd");
+		}
 		if (!PersonValidations.isValidEmail(person.getEmail())) {
 			throw new BusinessException("Entered person email " + person.getEmail() + " is invalid");
 		}
