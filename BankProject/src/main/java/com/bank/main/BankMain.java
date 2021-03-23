@@ -172,7 +172,7 @@ public class BankMain {
 		try {
 			amount = Double.parseDouble(scanner.nextLine());
 		} catch (NumberFormatException ex) {
-			log.info("Enter valid amount for withdraw:");
+			log.error("Enter valid amount for withdraw.");
 			log.info("---------------------");
 			return;
 		}
@@ -212,7 +212,7 @@ public class BankMain {
 		try {
 			amount = Double.parseDouble(scanner.nextLine());
 		} catch (NumberFormatException ex) {
-			log.info("Enter valid amount for withdraw:");
+			log.error("Enter valid amount for withdraw:");
 			log.info("---------------------");
 			return;
 		}
@@ -257,7 +257,7 @@ public class BankMain {
 		try {
 			amount = Double.parseDouble(scanner.nextLine());
 		} catch (NumberFormatException ex) {
-			log.info("Enter valid amount for deposit:");
+			log.error("Enter valid amount for deposit:");
 			log.info("---------------------");
 			return;
 		}
@@ -354,7 +354,7 @@ public class BankMain {
 		try {
 			deposit = Double.parseDouble(scanner.nextLine());
 		} catch (NumberFormatException ex) {
-			log.info("Enter valid amount for deposit:");
+			log.error("Enter valid amount for deposit:");
 			log.info("---------------------");
 			return;
 		}
@@ -452,7 +452,7 @@ public class BankMain {
 		} catch (BusinessException e) {
 			//log.error(e);
 			//e.printStackTrace();
-			log.info("...ERROR: " + e.getMessage());
+			log.error("...ERROR: " + e.getMessage());
 		}
 	}
 
@@ -502,7 +502,7 @@ public class BankMain {
 		} catch (BusinessException e) {
 			//log.error(e);
 			//e.printStackTrace();
-			log.info(e.getMessage());
+			log.error("...ERROR: " + e.getMessage());
 			log.info("------------RETRY WITH VALID VALUES---------");
 		}
 	}
@@ -535,7 +535,7 @@ public class BankMain {
 		} catch (BusinessException e) {
 			//log.error(e);
 			//e.printStackTrace();
-			
+			log.error("...ERROR: " + e.getMessage());
 		}
 	}
 
