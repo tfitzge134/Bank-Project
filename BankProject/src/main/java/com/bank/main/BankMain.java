@@ -99,8 +99,8 @@ public class BankMain {
 				log.info("Person LOGIN FAILED!");
 			}
 		} catch (BusinessException e) {
-			log.error(e);
-			log.info(e.getMessage());
+			//log.error(e);
+			log.error("....ERROR: " + e.getMessage());
 			log.info("------------RETRY WITH VALID VALUES---------");
 		}
 	}
@@ -194,10 +194,9 @@ public class BankMain {
 				log.info("Transfer failed");
 			}
 		} catch (BusinessException e) {
-			log.error(e);
+			//log.error(e);
 			//e.printStackTrace();
-			log.info("ERROR: " + e.getMessage());
-
+			log.error("....ERROR: " + e.getMessage());
 		}
 
 	}
@@ -241,10 +240,9 @@ public class BankMain {
 				log.info("Withdrawal failed");
 			}
 		} catch (BusinessException e) {
-			log.error(e);
+			log.error("....ERROR: " + e.getMessage());
+			//log.error(e);
 			//e.printStackTrace();
-			log.info("ERROR: " + e.getMessage());
-
 		}
 	}
 
@@ -282,9 +280,9 @@ public class BankMain {
 				log.info("Deposit failed.");
 			}
 		} catch (BusinessException e) {
-			log.error(e);
+			log.error("....ERROR: " + e.getMessage());
+			//log.error(e);
 			//e.printStackTrace();
-			log.info("ERROR: " + e.getMessage());
 
 		}
 	}
@@ -303,22 +301,13 @@ public class BankMain {
 				return;
 			}
 			log.info("Current Balance: " + account.getBalance());
-//			 {
-//				log.info(".");
-//			}
 		} catch (BusinessException e) {
-			log.error(e);
+			log.error("....ERROR: " + e.getMessage());
+			//log.error(e);
 			//e.printStackTrace();
-			log.info("ERROR: " + e.getMessage());
-
 		}
 	
 	}
-			
-			//log.info("Current Balance: " + account.getBalance());
-////	
-		
-		
 
 	private static void viewMyAccounts() {
 		log.info("....2)View My Accounts");
@@ -330,17 +319,26 @@ public class BankMain {
 				return;
 			}
 			for (Account account : accounts) {
-				log.info("Account Number: " + account.getAccountnumber() 
-						+ ", AccounType: " + account.getAccountType() 
-						+ ", Openingbalance: " + account.getOpeningbalance()
-						+ ", Balance: " + account.getBalance()
-						+ ", Status: " + account.getStatus()
-						);
+				if(account.getAccountnumber() == null) {
+					log.info("Account Number: PENDING"
+							+ ", AccounType: " + account.getAccountType() 
+							+ ", Openingbalance: " + account.getOpeningbalance()
+							+ ", Status: " + account.getStatus()
+							);
+				}
+				else {
+					
+					log.info("Account Number: " + account.getAccountnumber() 
+					+ ", AccounType: " + account.getAccountType() 
+					+ ", Balance: " + account.getBalance()
+					+ ", Status: " + account.getStatus()
+							);
+				}
 			}
 		} catch (BusinessException e) {
-			log.error(e);
+			log.error("....ERROR: " + e.getMessage());
+			//log.error(e);
 			//e.printStackTrace();
-			log.info(e);
 		}
 		
 	}
@@ -377,9 +375,9 @@ public class BankMain {
 				log.info("Account application FAILED!");
 			}
 		} catch (BusinessException e) {
-			log.error(e);
+			log.error("....ERROR: " + e.getMessage());
+			//log.error(e);
 			//e.printStackTrace();
-			log.info(e.getMessage());
 		}
 
 	}
@@ -452,7 +450,7 @@ public class BankMain {
 				}
 			}
 		} catch (BusinessException e) {
-			log.error(e);
+			//log.error(e);
 			//e.printStackTrace();
 			log.info("...ERROR: " + e.getMessage());
 		}
@@ -502,7 +500,7 @@ public class BankMain {
 				log.info(person);
 			}
 		} catch (BusinessException e) {
-			log.error(e);
+			//log.error(e);
 			//e.printStackTrace();
 			log.info(e.getMessage());
 			log.info("------------RETRY WITH VALID VALUES---------");
@@ -535,7 +533,7 @@ public class BankMain {
 						+ ", Status: " + account.getStatus());
 			}
 		} catch (BusinessException e) {
-			log.error(e);
+			//log.error(e);
 			//e.printStackTrace();
 			
 		}

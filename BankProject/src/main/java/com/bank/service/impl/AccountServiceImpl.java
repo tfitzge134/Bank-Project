@@ -36,7 +36,7 @@ public class AccountServiceImpl implements AccountService {
 			try {
 				txnLogCRUDService.createTransactionLog(txnLog);
 			} catch (BusinessException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 				log.error(e);
 				System.out.println("Creating TransactionLog FAILED.");
 			}
@@ -62,7 +62,7 @@ public class AccountServiceImpl implements AccountService {
 				txnLogCRUDService.createTransactionLog(txnLog);
 			} catch (BusinessException e) {
 				log.error(e);
-				e.printStackTrace();
+				//e.printStackTrace();
 				System.out.println("Creating TransactionLog FAILED.");
 			}
 			return 1;
@@ -132,12 +132,12 @@ public class AccountServiceImpl implements AccountService {
 				txnLogCRUDService.createTransactionLog(txnLog);
 			} catch (BusinessException e) {
 				log.error(e);
-				e.printStackTrace();
+				//e.printStackTrace();
 				System.out.println("Creating TransactionLog FAILED.");
 			}
 			return 1;
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			log.error(e);
 			// roll back the transaction
 			try {
