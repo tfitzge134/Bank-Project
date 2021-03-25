@@ -18,15 +18,15 @@ class PersonCRUDServiceTest {
 	void testCreatePerson() {
 
 		Person person = new Person();
-		String firstname = "Bill";
+		String firstname = "Bla";
 		person.setFirstname(firstname);
 		String lastname = "Woods";
 		person.setLastname(lastname);
 		String password = "abc";
 		person.setPassword(password);
-		String dob = "2000-01-02";
+		String dob = "2000-03-02";
 		person.setDob(dob);
-		String email = "bill@example.com";
+		String email = "bla@example.com";
 		person.setEmail(email);
 		person.setEmployee(false);
 		String phonenumber = "1122334455";

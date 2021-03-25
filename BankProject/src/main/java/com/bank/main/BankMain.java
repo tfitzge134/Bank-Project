@@ -171,6 +171,11 @@ public class BankMain {
 		double amount = 0.0;
 		try {
 			amount = Double.parseDouble(scanner.nextLine());
+			if(amount <= 0) {
+				log.error("Enter valid non-zero positive amount for withdrawal.");
+				log.info("---------------------");
+				return;
+			}
 		} catch (NumberFormatException ex) {
 			log.error("Enter valid amount for withdraw.");
 			log.info("---------------------");
@@ -211,6 +216,11 @@ public class BankMain {
 		double amount = 0.0;
 		try {
 			amount = Double.parseDouble(scanner.nextLine());
+			if(amount <= 0) {
+				log.error("Enter valid non-zero positive amount for withdrawal.");
+				log.info("---------------------");
+				return;
+			}
 		} catch (NumberFormatException ex) {
 			log.error("Enter valid amount for withdraw:");
 			log.info("---------------------");
@@ -256,6 +266,11 @@ public class BankMain {
 		double amount = 0.0;
 		try {
 			amount = Double.parseDouble(scanner.nextLine());
+			if(amount <= 0) {
+				log.error("Enter valid non-zero positive amount for deposit.");
+				log.info("---------------------");
+				return;
+			}
 		} catch (NumberFormatException ex) {
 			log.error("Enter valid amount for deposit:");
 			log.info("---------------------");
@@ -353,6 +368,11 @@ public class BankMain {
 		double deposit = 0.0;
 		try {
 			deposit = Double.parseDouble(scanner.nextLine());
+			if(deposit <= 0) {
+				log.error("Enter valid non-zero positive amount for deposit.");
+				log.info("---------------------");
+				return;
+			}
 		} catch (NumberFormatException ex) {
 			log.error("Enter valid amount for deposit:");
 			log.info("---------------------");
