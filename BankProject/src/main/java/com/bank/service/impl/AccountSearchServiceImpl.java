@@ -55,6 +55,7 @@ public class AccountSearchServiceImpl implements AccountSearchService {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				Account account = new Account();
+				account.setId(resultSet.getInt("id"));
 				account.setCustomerid(resultSet.getInt("customerid"));
 				account.setAccountType(resultSet.getString("accountType"));
 				account.setAccountnumber(resultSet.getString("accountnumber"));

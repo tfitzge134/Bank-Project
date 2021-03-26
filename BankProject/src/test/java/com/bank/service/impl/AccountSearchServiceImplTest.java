@@ -8,7 +8,7 @@ class AccountSearchServiceImplTest {
 
 	@Test
 	void testGetAccountByAccountNumber() {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test
